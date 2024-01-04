@@ -20,9 +20,17 @@ const navigationConfig = [
     translate: "APPLICATIONS",
     children: [
       {
+        id: "apps.advertisement",
+        title: "Advertisement",
+        translate: "Advertisement",
+        type: "item",
+        icon: "material-outline:assignment",
+        url: "/apps/advertisement",
+      },
+      {
         id: "apps.workoutArchive",
-        title: "workoutArchive",
-        translate: "WORKOUT_ARCHIVE",
+        title: "Advertisement",
+        translate: "Advertisement",
         type: "item",
         icon: "material-outline:bookmark",
         url: "/apps/programs",

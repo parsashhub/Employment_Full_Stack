@@ -36,9 +36,9 @@ model Advertisement {
   location           String      @db.VarChar(255)
   jobDescription     String      @db.VarChar(1000)
   companyDescription String      @db.VarChar(1000)
-  minWorkExperience  String
+  minWorkExperience  Int
   isShared           Boolean     @default(false)
-  salary             String
+  salary             Float
   createdAt          DateTime    @default(now())
   updatedAt          DateTime?   @updatedAt
   contractId         Int
