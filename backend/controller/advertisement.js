@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const _ = require("lodash");
 const authMiddleware = require("../middleware/authMiddleware");
+const isEmployer = require("../middleware/isEmployer");
 const isAdmin = require("../middleware/isAdmin");
 const Joi = require("joi");
 const prisma = require("../prisma/client");
@@ -11,6 +12,7 @@ const {
   ERROR_500,
   CREATE_ADVERTISEMENT,
   UPDATE_ADVERTISEMENT,
+  DELETE_ADVERTISEMENT,
 } = require("../config/message");
 
 //@description     get advertisements list
@@ -61,11 +63,8 @@ router.post("/", authMiddleware, async (req, res) => {
 //@description     update advertisement
 //@route           Put /api/advertisements
 //@access          protected EMPLOYER
-router.put("/:id", authMiddleware, async (req, res) => {
+router.put("/:id", [authMiddleware, isEmployer], async (req, res) => {
   const { user, body, params } = req;
-  if (user.role !== "EMPLOYER")
-    return res.status(403).json({ message: ["access denied"] });
-
   if (!Number(params.id))
     return res.status(404).json({ message: ["no url params provided"] });
 
@@ -87,6 +86,21 @@ router.put("/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ message: [ERROR_500] });
   }
 });
+
+router.delete("/:id", [authMiddleware, isEmployer], async (req, res) => {
+  const { params } = req;
+  if (!Number(params.id))
+    return res.status(404).json({ message: ["no url params provided"] });
+
+  try {
+    await prisma.Advertisement.delete({ where: { id: parseInt(params.id) } });
+    res.json({ message: [DELETE_ADVERTISEMENT] });
+  } catch (e) {
+    res.status(500).json({ message: [ERROR_500] });
+  }
+});
+
+
 
 function validateCreate(user) {
   const schema = Joi.object().keys({
