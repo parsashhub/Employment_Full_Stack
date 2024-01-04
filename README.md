@@ -14,6 +14,11 @@ backend on port 3001.
 ```
 npx prisma migrate dev
 ```
+#### Prisma studio
+```
+npx prisma studio
+```
+
 ### Running the project without docker
 If you do not have docker. you should do everything manually.
 first, you should install the dependencies of both front and backend with the following command:
