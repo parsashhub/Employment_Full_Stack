@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  phoneNumber String?   @unique @db.VarChar(15)
+  firstname   String?   @db.VarChar(50)
+  lastname    String?   @db.VarChar(50)
+  password    String?   @db.VarChar(500)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  role        Role
+  resume      String?
+}
+
+enum Role {
+  EMPLOYER
+  JOBSEEKER
+  ADMIN
+}
+
+model Addvertisement {
+  id                 Int         @id @default(autoincrement())
+  title              String      @db.VarChar(255)
+  companyName        String      @db.VarChar(255)
+  companywebsite     String      @db.VarChar(100)
+  companyLogo        String      @db.VarChar(1000)
+  companySize        Int
+  location           String      @db.VarChar(255)
+  jobDescription     String      @db.VarChar(1000)
+  companyDescription String      @db.VarChar(1000)
+  minWorkExperience  String
+  isShared           Boolean     @default(false)
+  salary             String
+  contractId         Int
+  contract           JobContract @relation(fields: [contractId], references: [id])
+  categoryId         Int
+  category           JobCategory @relation(fields: [categoryId], references: [id])
+}
+
+model JobCategory {
+  id             Int              @id @default(autoincrement())
+  title          String           @db.VarChar(255)
+  Addvertisement Addvertisement[]
+}
+
+model JobContract {
+  id             Int              @id @default(autoincrement())
+  title          String           @db.VarChar(255)
+  Addvertisement Addvertisement[]
+}
