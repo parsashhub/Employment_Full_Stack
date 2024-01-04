@@ -79,6 +79,31 @@ router.post("/changePassword", authMiddleware, async (req, res) => {
   }
 });
 
+//@description     upload user resume
+//@route           POST /api/user/uploadResume
+//@access          protected jobSeeker
+router.post("/uploadResume", authMiddleware, async (req, res) => {
+  const { body, user } = req;
+  if (user.role !== "JOBSEEKER")
+    return res.status(403).json({ message: ["access denied"] });
+
+  if (_.isEmpty(body))
+    return res.status(400).json({ message: ["no body provided"] });
+
+  if (!body.file)
+    return res.status(400).json({ message: ["body has no attribute file"] });
+
+  const result = await prisma.user.update({
+    where: { id: user.id },
+    data: { resume: body.file },
+    select: {
+      resume: true,
+    },
+  });
+
+  res.json({ data: result, message: ["رزومه با موفقیت ذخیره شد"] });
+});
+
 //@description     get users list
 //@route           POST /api/user
 //@access          protected admin
