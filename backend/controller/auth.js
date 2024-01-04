@@ -60,7 +60,6 @@ router.post("/signUp", async (req, res) => {
     const user = await prisma.user.create({
       data: { ...body, password: passwordHash },
     });
-    console.log(user);
     res.status(201).send({
       message: ["کاربر با موفقیت ثبت شد"],
     });

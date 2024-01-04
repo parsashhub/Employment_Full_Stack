@@ -1,9 +1,3 @@
-### Project information
-Backend: node js, express, prisma, joi
-<br/>
-Frontend: next js, react, react-query, mui, formik
-<br/>
-Databsae: mysql
 #### Building docker images for frontend, backend, database, and also the container of docker.
 ```
 docker-compose build
