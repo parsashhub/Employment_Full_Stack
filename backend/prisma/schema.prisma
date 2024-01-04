@@ -26,11 +26,11 @@ enum Role {
   ADMIN
 }
 
-model Addvertisement {
+model Advertisement {
   id                 Int         @id @default(autoincrement())
   title              String      @db.VarChar(255)
   companyName        String      @db.VarChar(255)
-  companywebsite     String      @db.VarChar(100)
+  companyWebsite     String      @db.VarChar(100)
   companyLogo        String      @db.VarChar(1000)
   companySize        Int
   location           String      @db.VarChar(255)
@@ -48,13 +48,13 @@ model Addvertisement {
 }
 
 model JobCategory {
-  id             Int              @id @default(autoincrement())
-  title          String           @db.VarChar(255)
-  Addvertisement Addvertisement[]
+  id             Int             @id @default(autoincrement())
+  title          String          @db.VarChar(255)
+  Addvertisement Advertisement[]
 }
 
 model JobContract {
-  id             Int              @id @default(autoincrement())
-  title          String           @db.VarChar(255)
-  Addvertisement Addvertisement[]
+  id             Int             @id @default(autoincrement())
+  title          String          @db.VarChar(255)
+  Addvertisement Advertisement[]
 }
