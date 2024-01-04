@@ -3,6 +3,8 @@ const cors = require("cors");
 const error = require("../middleware/error");
 const users = require("../controller/users");
 const advertisement = require("../controller/advertisement");
+const jobCategories = require("../controller/jobCategories");
+const jobContracts = require("../controller/jobContracts");
 const auth = require("../controller/auth");
 const cookieParser = require("cookie-parser");
 
@@ -14,6 +16,8 @@ module.exports = function (app) {
   app.use("/api/auth", auth);
   app.use("/api/users", users);
   app.use("/api/advertisements", advertisement);
+  app.use("/api/jobCategories", jobCategories);
+  app.use("/api/jobContracts", jobContracts);
 
   app.use(error);
 };
