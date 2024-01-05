@@ -100,6 +100,14 @@ function ProfileApp() {
           >
             ویرایش اطلاعات
           </Button>
+          <Button
+            variant="contained"
+            color="error"
+            className="mt-24 w-2/3 rounded-8"
+            size="large"
+          >
+            درخواست حذف حساب کاربری
+          </Button>
         </motion.div>
       }
       scroll={isMobile ? "normal" : "page"}

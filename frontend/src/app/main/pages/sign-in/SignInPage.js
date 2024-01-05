@@ -88,6 +88,11 @@ function SignInPage() {
               ثبت نام
             </Link>
           </div>
+          <div className="flex items-baseline mt-12 font-medium">
+            <Link className="mx-4" to="/apps/advertisementList">
+              مشاهده لیست آگهی ها
+            </Link>
+          </div>
           <div className="flex flex-col justify-center w-full mt-16">
             {form}
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between my-8 mt-16 space-y-4">

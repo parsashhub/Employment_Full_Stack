@@ -32,7 +32,7 @@ function UserMenu(props) {
       >
         <div className="hidden md:flex flex-col mx-4 items-end">
           <Typography component="span" className="font-semibold flex">
-            {`${user?.firstname} ${user?.lastname}`}
+            {`${user?.firstname ?? ""} ${user?.lastname ?? ""}`}
           </Typography>
           <Typography
             className="text-11 font-medium capitalize"
@@ -44,7 +44,9 @@ function UserMenu(props) {
               "Guest"}
           </Typography>
         </div>
-        <Avatar className="md:mx-4">{user?.firstname[0]}</Avatar>
+        <Avatar className="md:mx-4">
+          {user.firstname && user.firstname[0]}
+        </Avatar>
       </Button>
       <Popover
         open={Boolean(userMenu)}
@@ -68,13 +70,13 @@ function UserMenu(props) {
               <ListItemIcon className="min-w-40">
                 <FuseSvgIcon>heroicons-outline:lock-closed</FuseSvgIcon>
               </ListItemIcon>
-              <ListItemText primary="Sign In" />
+              <ListItemText primary="ورود" />
             </MenuItem>
             <MenuItem component={Link} to="/sign-up" role="button">
               <ListItemIcon className="min-w-40">
                 <FuseSvgIcon>heroicons-outline:user-add </FuseSvgIcon>
               </ListItemIcon>
-              <ListItemText primary="Sign up" />
+              <ListItemText primary="ثبت نام" />
             </MenuItem>
           </>
         ) : (
