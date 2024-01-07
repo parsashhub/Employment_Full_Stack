@@ -11,7 +11,6 @@ import WrapperDialog from "../../../../../reusable/Dialogs/myDialog";
 import * as yup from "yup";
 import FormikHook, {
   createFormikObjects,
-  typeOnlyNumber,
 } from "../../../../../reusable/Form/FormikCustomHook";
 import { FIELD_REQUIRED } from "../../../../../reusable/messages";
 import { Button, MenuItem, Typography } from "@mui/material";
@@ -112,7 +111,13 @@ const ExerciseDialog = () => {
     if (dialog.data) {
       const { data } = dialog;
       Object.keys(data).map((key) => {
-        if (key !== "contract" && key !== "category") {
+        if (
+          key !== "contract" &&
+          key !== "category" &&
+          key !== "updatedAt" &&
+          key !== "createdAt" &&
+          key !== "id"
+        ) {
           formik?.setFieldValue(key, data[key]);
         }
       });

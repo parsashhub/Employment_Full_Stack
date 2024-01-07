@@ -42,7 +42,7 @@ export const addAdvertisement = createAsyncThunk(
       dispatch(closeNewDialog());
       resetForm();
     } catch (e) {
-      toast.error(e.response?.data?.message[0].message ?? e.message);
+      toast.error(e.response?.data?.message[0] ?? e.message);
     }
   },
 );
@@ -57,7 +57,7 @@ export const updateAdvertisement = createAsyncThunk(
       dispatch(closeEditDialog());
       resetForm();
     } catch (e) {
-      toast.error(e.response?.data?.message[0].message ?? e.message);
+      toast.error(e.response?.data?.message[0] ?? e.message);
     }
   },
 );

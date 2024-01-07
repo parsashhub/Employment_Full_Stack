@@ -58,38 +58,40 @@ const ExerciseContent = () => {
         Header: "عملیات",
         id: "action",
         sortable: false,
-        Cell: ({ row }) => (
-          <div className="flex items-center">
-            <Tooltip title="ویرایش">
-              <IconButton
-                color="secondary"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  dispatch(openEditDialog(row.original));
-                }}
-              >
-                <Icon>edit</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="حذف">
-              <IconButton
-                color="error"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setOpen(true);
-                  setHandleDelete(() => async () => {
-                    setOpen(false);
-                    await Promise.all([
-                      dispatch(removeAdvertisement(row.original.id)),
-                    ]);
-                  });
-                }}
-              >
-                <Icon>delete</Icon>
-              </IconButton>
-            </Tooltip>
-          </div>
-        ),
+        Cell: ({ row }) => {
+          return row.original.userId === user.id ? (
+            <div className="flex items-center">
+              <Tooltip title="ویرایش">
+                <IconButton
+                  color="secondary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(openEditDialog(row.original));
+                  }}
+                >
+                  <Icon>edit</Icon>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="حذف">
+                <IconButton
+                  color="error"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(true);
+                    setHandleDelete(() => async () => {
+                      setOpen(false);
+                      await Promise.all([
+                        dispatch(removeAdvertisement(row.original.id)),
+                      ]);
+                    });
+                  }}
+                >
+                  <Icon>delete</Icon>
+                </IconButton>
+              </Tooltip>
+            </div>
+          ) : null;
+        },
       },
     ],
     [dispatch, setHandleDelete, setOpen, user],
