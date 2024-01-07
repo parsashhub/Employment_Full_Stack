@@ -11,7 +11,7 @@ now you can access the ui from the port 3000.
 backend on port 3001.
 
 ### If it is your first time cloning this repo, you should do these things first.
-#### Prisma migration (handled in docker)
+#### Prisma migration
 ```
 npx prisma migrate dev
 ```
