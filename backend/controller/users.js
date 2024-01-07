@@ -115,6 +115,7 @@ router.get("/", [authMiddleware, isAdmin], async (req, res) => {
       page: page ?? 1,
       perPage: perPage ?? 10,
       sort,
+      where: { isActive: true },
       select: {
         id: true,
         role: true,
@@ -130,6 +131,23 @@ router.get("/", [authMiddleware, isAdmin], async (req, res) => {
   } catch (e) {
     res.status(500).send({ message: [ERROR_500] });
   }
+});
+
+//@description     delete account
+//@route           POST /api/user/deleteAccount
+//@access          protected
+router.post("/deleteAccount", authMiddleware, async (req, res) => {
+  await prisma.user.update({
+    where: { id: req.user.id },
+    data: {
+      phoneNumber: null,
+      email: "",
+      firstname: null,
+      lastname: null,
+      isActive: false,
+    },
+  });
+  res.json({ message: ["حساب کاربری شما با موفقیت حذف شد"] });
 });
 
 function validateUpdate(user) {

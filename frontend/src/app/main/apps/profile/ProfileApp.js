@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
@@ -13,11 +13,17 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { updateUserData } from "app/store/userSlice";
+import DeleteDialog from "../../../../reusable/Dialogs/deleteDialog";
+import { removeAdvertisement } from "../advertisement/store/slice";
+import { useNavigate } from "react-router-dom";
 
 function ProfileApp() {
   const user = useSelector((state) => state.user?.data);
   const dispatch = useDispatch();
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const [open, setOpen] = useState(false);
+  const [handleDelete, setHandleDelete] = useState(() => () => {});
+  const navigate = useNavigate();
 
   const formData = useMemo(
     () => [
@@ -105,9 +111,24 @@ function ProfileApp() {
             color="error"
             className="mt-24 w-2/3 rounded-8"
             size="large"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(true);
+              setHandleDelete(() => async () => {
+                setOpen(false);
+                await Promise.all([axios.post("/users/deleteAccount")]);
+                navigate("/sign-out");
+              });
+            }}
           >
             درخواست حذف حساب کاربری
           </Button>
+          <DeleteDialog
+            open={open}
+            setOpen={setOpen}
+            handleDelete={handleDelete}
+            title={"آیا حذف حساب کاربری خوداطمینان دارید؟"}
+          />
         </motion.div>
       }
       scroll={isMobile ? "normal" : "page"}

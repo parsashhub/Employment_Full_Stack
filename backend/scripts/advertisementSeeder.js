@@ -1,8 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
-const { hashPassword } = require("../config/utils");
 const prisma = new PrismaClient();
 
 async function main() {
+  const user = await prisma.user.findFirst({ where: { role: "EMPLOYER" } });
   await prisma.Advertisement.createMany({
     data: [
       {
@@ -19,6 +19,7 @@ async function main() {
         salary: 30000000,
         contractId: 1,
         categoryId: 1,
+        userId: user.id,
       },
       {
         title: "this is a title2",
@@ -34,6 +35,7 @@ async function main() {
         salary: 25000000,
         contractId: 2,
         categoryId: 4,
+        userId: user.id,
       },
     ],
   });

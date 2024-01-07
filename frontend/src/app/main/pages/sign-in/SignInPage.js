@@ -24,9 +24,6 @@ function SignInPage() {
         type: "TextField",
         name: "email",
         label: "ایمیل",
-        others: {
-          placeholder: "شماره خود را بدون 09 آن وارد کنید",
-        },
         validation: yup.string().required(FIELD_REQUIRED),
 
         grids: { xs: 12, md: 12, sm: 12 },

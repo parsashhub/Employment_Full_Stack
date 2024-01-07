@@ -59,11 +59,11 @@ const navigationConfig = [
         icon: "material-outline:assignment",
         url: "/apps/jobCategories",
         auth: authRoles.admin,
-        badge: {
-          title: "به زودی",
-          classes: "px-8 bg-teal-400 text-black rounded",
-        },
-        disabled: true,
+        // badge: {
+        //   title: "به زودی",
+        //   classes: "px-8 bg-teal-400 text-black rounded",
+        // },
+        // disabled: true,
       },
       {
         id: "apps.advertisements",

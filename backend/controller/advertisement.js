@@ -52,8 +52,9 @@ router.post("/", authMiddleware, async (req, res) => {
   if (error) return res.status(400).send({ message: error });
 
   try {
-    const result = await prisma.Advertisement.create({ data: body });
-    console.log(result);
+    const result = await prisma.Advertisement.create({
+      data: { ...body, userId: user.id },
+    });
     res.status(201).json({ data: result, message: [CREATE_ADVERTISEMENT] });
   } catch (e) {
     res.status(500).json({ message: [ERROR_500] });
@@ -99,8 +100,6 @@ router.delete("/:id", [authMiddleware, isEmployer], async (req, res) => {
     res.status(500).json({ message: [ERROR_500] });
   }
 });
-
-
 
 function validateCreate(user) {
   const schema = Joi.object().keys({

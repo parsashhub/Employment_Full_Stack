@@ -8,16 +8,18 @@ datasource db {
 }
 
 model User {
-  id          String    @id @default(uuid())
-  email       String    @unique
-  phoneNumber String?   @unique @db.VarChar(15)
-  firstname   String?   @db.VarChar(50)
-  lastname    String?   @db.VarChar(50)
-  password    String?   @db.VarChar(500)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  role        Role
-  resume      String?
+  id            String          @id @default(uuid())
+  email         String          @unique
+  phoneNumber   String?         @unique @db.VarChar(15)
+  firstname     String?         @db.VarChar(50)
+  lastname      String?         @db.VarChar(50)
+  password      String?         @db.VarChar(500)
+  isActive      Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  role          Role
+  resume        String?
+  Advertisement Advertisement[]
 }
 
 enum Role {
@@ -45,6 +47,8 @@ model Advertisement {
   contract           JobContract @relation(fields: [contractId], references: [id])
   categoryId         Int
   category           JobCategory @relation(fields: [categoryId], references: [id])
+  userId             String
+  user               User        @relation(fields: [userId], references: [id])
 }
 
 model JobCategory {
