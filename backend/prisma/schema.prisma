@@ -33,7 +33,7 @@ model Advertisement {
   title              String      @db.VarChar(255)
   companyName        String      @db.VarChar(255)
   companyWebsite     String      @db.VarChar(100)
-  companyLogo        String      @db.VarChar(1000)
+  companyLogo        String?     @db.VarChar(1000)
   companySize        Int
   location           String      @db.VarChar(255)
   jobDescription     String      @db.VarChar(1000)

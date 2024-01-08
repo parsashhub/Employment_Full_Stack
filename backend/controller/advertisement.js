@@ -122,7 +122,7 @@ router.put("/:id", authMiddleware, async (req, res) => {
 });
 
 router.delete("/:id", authMiddleware, async (req, res) => {
-  const { params } = req;
+  const { params, user } = req;
   if (!Number(params.id))
     return res.status(404).json({ message: ["no url params provided"] });
 
@@ -149,7 +149,7 @@ function validateCreate(user) {
     title: Joi.string().min(5).max(250).required(),
     companyName: Joi.string().min(5).max(100).required(),
     companyWebsite: Joi.string().min(5).max(100).required(),
-    companyLogo: Joi.string().required(),
+    companyLogo: Joi.string().empty(""),
     companySize: Joi.number().required(),
     location: Joi.string().required(),
     jobDescription: Joi.string().min(10).max(1000).required(),

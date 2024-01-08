@@ -42,7 +42,9 @@ export const addAdvertisement = createAsyncThunk(
       dispatch(closeNewDialog());
       resetForm();
     } catch (e) {
-      toast.error(e.response?.data?.message[0] ?? e.message);
+      toast.error(
+        e.response?.data?.message?.details[0] ?? e.response?.data?.message[0],
+      );
     }
   },
 );

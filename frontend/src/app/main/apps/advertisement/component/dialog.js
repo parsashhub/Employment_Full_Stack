@@ -81,6 +81,9 @@ const ExerciseDialog = () => {
 
   const submitForm = useCallback(
     async (formValue) => {
+      formValue.companySize = parseInt(formValue.companySize);
+      formValue.minWorkExperience = parseInt(formValue.minWorkExperience);
+      formValue.salary = parseInt(formValue.salary);
       if (dialog.type === "new")
         dispatch(
           addAdvertisement({
@@ -116,9 +119,10 @@ const ExerciseDialog = () => {
           key !== "category" &&
           key !== "updatedAt" &&
           key !== "createdAt" &&
+          key !== "userId" &&
           key !== "id"
         ) {
-          formik?.setFieldValue(key, data[key]);
+          formik?.setFieldValue(key, data[key] ?? "");
         }
       });
     }
