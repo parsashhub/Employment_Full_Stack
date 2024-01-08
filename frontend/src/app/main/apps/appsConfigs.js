@@ -3,6 +3,8 @@ import changePasswordConfig from "./changePassword/changePasswordConfig";
 import advertisementAppConfig from "./advertisement/advertisementAppConfig";
 import advertisementsAppConfig from "./advertisements/advertisementsAppConfig";
 import jobCategoriesAppConfig from "./jobCategories/jobCategoriesAppConfig";
+import pricingPagesConfig from "./pricing/pricingPagesConfig";
+import HelpCenterAppConfig from "./helpCenter/HelpCenterAppConfig";
 
 const appsConfigs = [
   ProfileAppConfig,
@@ -10,6 +12,8 @@ const appsConfigs = [
   advertisementAppConfig,
   advertisementsAppConfig,
   jobCategoriesAppConfig,
+  pricingPagesConfig,
+  HelpCenterAppConfig,
 ];
 
 export default appsConfigs;

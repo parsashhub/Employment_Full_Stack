@@ -8,6 +8,7 @@ const locale = {
   rules: "قوانین",
   signIn: "ورود",
   plans: "صفحه قیمت ها و پلن ها",
+  support: "پشتیبانی",
 };
 
 export default locale;

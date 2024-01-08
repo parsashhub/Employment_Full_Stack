@@ -37,6 +37,7 @@ const navigationConfig = [
         url: "/apps/plans",
         auth: authRoles.employer,
       },
+
       {
         id: "apps.users",
         title: "users",
@@ -84,6 +85,15 @@ const navigationConfig = [
         auth: authRoles.all,
       },
       {
+        id: "apps.changePassword",
+        title: "changePassword",
+        translate: "CHANGE_PASSWORD",
+        type: "item",
+        icon: "heroicons-outline:lock-closed",
+        url: "/apps/changePassword",
+        auth: authRoles.all,
+      },
+      {
         id: "apps.rules",
         title: "rules",
         translate: "rules",
@@ -93,12 +103,12 @@ const navigationConfig = [
         auth: authRoles.all,
       },
       {
-        id: "apps.changePassword",
-        title: "changePassword",
-        translate: "CHANGE_PASSWORD",
+        id: "apps.support",
+        title: "support",
+        translate: "support",
         type: "item",
-        icon: "heroicons-outline:lock-closed",
-        url: "/apps/changePassword",
+        icon: "material-outline:help",
+        url: "/apps/support",
         auth: authRoles.all,
       },
       {
