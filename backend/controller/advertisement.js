@@ -89,8 +89,35 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
+//@description     get advertisement by id
+//@route           Put /api/advertisements/:id
+//@access          protected
+router.get("/:id", authMiddleware, async (req, res) => {
+  const { user, body, params } = req;
+  if (!Number(params.id))
+    return res.status(404).json({ message: ["no url params provided"] });
+
+  const { error } = validateUpdate(body);
+  if (error) return res.status(400).send({ message: error });
+
+  try {
+    const isExisting = await prisma.Advertisement.findUnique({
+      where: { id: parseInt(params.id) },
+      include: {
+        contract: true,
+        category: true,
+      },
+    });
+    if (!isExisting) return res.status(404).json({ message: [NOT_FOUND] });
+
+    res.json({ data: isExisting });
+  } catch (e) {
+    res.status(500).json({ message: [ERROR_500] });
+  }
+});
+
 //@description     update advertisement
-//@route           Put /api/advertisements
+//@route           Put /api/advertisements/:id
 //@access          protected EMPLOYER
 router.put("/:id", authMiddleware, async (req, res) => {
   const { user, body, params } = req;

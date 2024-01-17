@@ -1,23 +1,37 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FusePageCarded from "@fuse/core/FusePageSimple";
-import {useDeepCompareEffect, useThemeMediaQuery} from "@fuse/hooks";
-import { useDispatch } from "react-redux";
+import { useThemeMediaQuery } from "@fuse/hooks";
 import { useParams } from "react-router-dom";
+import { apiCaller } from "../../../../../reusable/axios";
+import axios from "axios";
+import SidebarContent from "./sidebar";
+import Content from "./content";
 
 const AdvertisementDetailApp = () => {
-  const routeParams = useParams();
-  const { id } = routeParams;
-  console.log(id);
-  const dispatch = useDispatch();
+  const { id } = useParams();
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
+  const [data, setData] = useState();
+  const pageLayout = useRef(null);
+  const getData = async () => {
+    const res = await apiCaller(() => axios.get(`advertisements/${id}`));
+    setData(res.data?.data);
+  };
 
-  useDeepCompareEffect(() => {}, [dispatch]);
+  useEffect(() => {
+    getData();
+    return () => {};
+  }, []);
 
   return (
     <FusePageCarded
-      header={<div>this is header</div>}
-      content={<div>this is content {id} </div>}
+      content={<Content data={data} />}
       scroll={isMobile ? "normal" : "content"}
+      rightSidebarContent={<SidebarContent />}
+      rightSidebarOpen={rightSidebarOpen}
+      rightSidebarWidth={288}
+      sidebarInner
+      innerScroll
     />
   );
 };
