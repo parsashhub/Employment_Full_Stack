@@ -117,7 +117,7 @@ const navigationConfig = [
         translate: "advertisementList",
         type: "item",
         icon: "material-outline:list",
-        url: "/apps/advertisementList",
+        url: "/apps/advertisements",
         auth: authRoles.onlyGuest,
       },
       {

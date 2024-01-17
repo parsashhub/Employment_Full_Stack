@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const prisma = require("../prisma/client");
 
 async function hashPassword(password) {
+  if (!password) throw new Error("password is not defined");
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 }
