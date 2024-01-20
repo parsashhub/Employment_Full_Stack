@@ -40,10 +40,17 @@ model Resume {
 
 model AdvertisementResume {
   id              Int           @id @default(autoincrement())
+  status          addStatus     @default(NOT_SEEN)
   userId          String
   user            User          @relation(fields: [userId], references: [id])
   advertisementId Int
   advertisement   Advertisement @relation(fields: [advertisementId], references: [id])
+}
+
+enum addStatus {
+  NOT_SEEN
+  REJECTED
+  ACCEPTED
 }
 
 model Advertisement {

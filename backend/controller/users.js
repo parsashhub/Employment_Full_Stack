@@ -180,16 +180,47 @@ router.post("/sendResume", authMiddleware, async (req, res) => {
     });
 
   // try {
-    await prisma.AdvertisementResume.create({
-      data: {
-        userId: user.id,
-        advertisementId: body.advertisementId,
-      },
-    });
-    res.status(201).json({ message: ["رزومه با موفقیت ارسال شد"] });
+  await prisma.AdvertisementResume.create({
+    data: {
+      userId: user.id,
+      advertisementId: body.advertisementId,
+    },
+  });
+  res.status(201).json({ message: ["رزومه با موفقیت ارسال شد"] });
   // } catch (e) {
   //   res.status(500).send({ message: ["something went wrong"] });
   // }
+});
+
+//@description     get applied list resume
+//@route           GET /api/users/appliedJob
+//@access          protected
+router.get("/appliedJob", authMiddleware, async (req, res) => {
+  const { user } = req;
+  let { perPage, page, sort, search } = req.query;
+
+  if (user.role !== "JOBSEEKER")
+    return res.status(403).json({ message: ["access denied"] });
+
+  try {
+    const results = await getPaginatedResults({
+      model: "AdvertisementResume",
+      page: page ?? 1,
+      perPage: perPage ?? 10,
+      sort,
+      where: { userId: user.id },
+      select: {
+        advertisement: {
+          include: { contract: true, category: true },
+        },
+        status: true,
+        id: true,
+      },
+    });
+    res.json(results);
+  } catch (e) {
+    res.status(500).send({ message: ["something went wrong"] });
+  }
 });
 
 //@description     get users list
