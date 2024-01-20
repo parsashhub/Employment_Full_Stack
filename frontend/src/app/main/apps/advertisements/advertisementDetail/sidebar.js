@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button, Icon, IconButton, Paper } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -8,33 +8,43 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { apiCaller } from "../../../../../reusable/axios";
+import { Link } from "react-router-dom";
 
 function SidebarContent(props) {
   const user = useSelector((state) => state.user.data);
   const [value, setValue] = useState();
 
-  function onChange(ev) {
-    const files = ev.target.files;
-    setValue(files[0]);
-  }
-
-  const remove = async (ev) => {
-    ev.preventDefault();
-    const res = await apiCaller(() => axios.get(`/users/removeResume`));
-    console.log(res);
+  const checkResume = async () => {
+    const res = await apiCaller(() => axios.get(`/users/resume`));
+    setValue(res.data?.data);
   };
 
-  const upload = async () => {
+  useEffect(() => {
+    checkResume();
+  }, []);
+
+  async function onChange(ev) {
+    const files = ev.target.files;
+    setValue(files[0]);
     const data = new FormData();
-    data.append("file", value);
+    data.append("file", files[0]);
     try {
       const res = await axios.post("/users/uploadResume", data, {
         headers: { "Content-type": "multipart/form-data" },
       });
       toast.success("رزومه با موفقیت آپلود شد");
+      checkResume();
     } catch (e) {
       toast.error(e.message);
     }
+  }
+
+  const remove = async (ev) => {
+    ev.preventDefault();
+    const res = await apiCaller(() =>
+      axios.delete(`/users/removeResume/${value?.id}`),
+    );
+    setValue();
   };
 
   return (
@@ -55,7 +65,9 @@ function SidebarContent(props) {
         <Divider />
         {value ? (
           <div className="flex flex-wrap items-center justify-between gap-8 border rounded cursor-pointer p-4">
-            <Typography variant="body1">{value?.name}</Typography>
+            <Link to={value?.link} target="_blank">
+              {value?.name}
+            </Link>
             <IconButton onClick={remove}>
               <Icon color="error">delete</Icon>
             </IconButton>
@@ -90,10 +102,11 @@ function SidebarContent(props) {
             variant="contained"
             color="secondary"
             className="rounded-8"
-            onClick={() => upload()}
+            // onClick={() => upload()}
             fullWidth
+            disabled={!value}
           >
-            بارگزاری رزومه
+            ارسال رزومه
           </Button>
         </div>
       </Paper>

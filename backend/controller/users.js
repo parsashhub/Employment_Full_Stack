@@ -122,11 +122,48 @@ router.post(
 //@description     remove user resume
 //@route           POST /api/user/removeResume
 //@access          protected jobSeeker
-router.post("/removeResume", authMiddleware, async (req, res) => {
-  const { body, user } = req;
+router.delete("/removeResume/:id", authMiddleware, async (req, res) => {
+  const { body, user, params } = req;
   if (user.role !== "JOBSEEKER")
     return res.status(403).json({ message: ["access denied"] });
-  console.log(body);
+
+  try {
+    const result = await prisma.Resume.delete({
+      where: { id: parseInt(params.id) },
+    });
+    const filePath = __dirname.slice(0, -10) + "uploads/" + result.data;
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(`Error deleting file: ${err.message}`);
+      } else {
+        console.log("File deleted successfully");
+      }
+    });
+    res.json({ message: ["رزومه با موفقیت حذف شد"] });
+  } catch (e) {
+    res.status(500).send({ message: ["something went wrong"] });
+  }
+});
+
+//@description     check user resume
+//@route           GET /api/user/resume
+//@access          protected jobSeeker
+router.get("/resume", authMiddleware, async (req, res) => {
+  const { user } = req;
+  if (user.role !== "JOBSEEKER")
+    return res.status(403).json({ message: ["access denied"] });
+  try {
+    const result = await prisma.Resume.findMany({
+      where: { userId: user.id },
+    });
+    let temp = {
+      ...result[0],
+      link: `http://localhost:3001/api/resume/${result[0].data}`,
+    };
+    res.json({ data: temp });
+  } catch (e) {
+    res.status(500).send({ message: ["something went wrong"] });
+  }
 });
 
 //@description     get users list
