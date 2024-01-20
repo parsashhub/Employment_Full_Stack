@@ -8,6 +8,8 @@ const Joi = require("joi");
 const prisma = require("../prisma/client");
 const { hashPassword, getPaginatedResults } = require("../config/utils");
 const { NOT_FOUND, ERROR_500 } = require("../config/message");
+const multer = require("multer");
+const fs = require("fs");
 
 //@description     user info
 //@route           GET /api/user/me
@@ -82,26 +84,49 @@ router.post("/changePassword", authMiddleware, async (req, res) => {
 //@description     upload user resume
 //@route           POST /api/user/uploadResume
 //@access          protected jobSeeker
-router.post("/uploadResume", authMiddleware, async (req, res) => {
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __dirname.slice(0, -10) + "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+const uploadStorage = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+router.post(
+  "/uploadResume",
+  [authMiddleware, uploadStorage.single("file")],
+  async (req, res) => {
+    const { body, user, file } = req;
+    if (user.role !== "JOBSEEKER")
+      return res.status(403).json({ message: ["access denied"] });
+    try {
+      await prisma.Resume.create({
+        data: {
+          name: file.originalname,
+          data: file.filename,
+          userId: user.id,
+        },
+      });
+
+      res.json({ message: ["رزومه با موفقیت ذخیره شد"] });
+    } catch (e) {
+      res.status(500).send({ message: ["something went wrong"] });
+    }
+  },
+);
+
+//@description     remove user resume
+//@route           POST /api/user/removeResume
+//@access          protected jobSeeker
+router.post("/removeResume", authMiddleware, async (req, res) => {
   const { body, user } = req;
   if (user.role !== "JOBSEEKER")
     return res.status(403).json({ message: ["access denied"] });
-
-  if (_.isEmpty(body))
-    return res.status(400).json({ message: ["no body provided"] });
-
-  if (!body.file)
-    return res.status(400).json({ message: ["body has no attribute file"] });
-
-  const result = await prisma.user.update({
-    where: { id: user.id },
-    data: { resume: body.file },
-    select: {
-      resume: true,
-    },
-  });
-
-  res.json({ data: result, message: ["رزومه با موفقیت ذخیره شد"] });
+  console.log(body);
 });
 
 //@description     get users list
