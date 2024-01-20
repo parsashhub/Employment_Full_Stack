@@ -6,6 +6,7 @@ import jobCategoriesAppConfig from "./jobCategories/jobCategoriesAppConfig";
 import pricingPagesConfig from "./pricing/pricingPagesConfig";
 import HelpCenterAppConfig from "./helpCenter/HelpCenterAppConfig";
 import rulesAppConfig from "./rules/rulesAppConfig";
+import appliedJobsAppConfig from "./appliedJobs/appliedJobsAppConfig";
 
 const appsConfigs = [
   ProfileAppConfig,
@@ -16,6 +17,7 @@ const appsConfigs = [
   pricingPagesConfig,
   HelpCenterAppConfig,
   rulesAppConfig,
+  appliedJobsAppConfig,
 ];
 
 export default appsConfigs;

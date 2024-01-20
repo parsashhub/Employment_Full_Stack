@@ -9,6 +9,8 @@ const locale = {
   signIn: "ورود",
   plans: "صفحه قیمت ها و پلن ها",
   support: "پشتیبانی",
+  appliedJobs: "درخواست های من",
+  checkResume: "رزومه های ارسال شده",
 };
 
 export default locale;

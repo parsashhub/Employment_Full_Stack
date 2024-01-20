@@ -60,11 +60,6 @@ const navigationConfig = [
         icon: "material-outline:assignment",
         url: "/apps/jobCategories",
         auth: authRoles.admin,
-        // badge: {
-        //   title: "به زودی",
-        //   classes: "px-8 bg-teal-400 text-black rounded",
-        // },
-        // disabled: true,
       },
       {
         id: "apps.advertisements",
@@ -74,6 +69,24 @@ const navigationConfig = [
         icon: "material-outline:list",
         url: "/apps/advertisements",
         auth: authRoles.all,
+      },
+      {
+        id: "apps.appliedJobs",
+        title: "appliedJobs",
+        translate: "appliedJobs",
+        type: "item",
+        icon: "material-outline:find_in_page",
+        url: "/apps/appliedJobs",
+        auth: authRoles.jobSeeker,
+      },
+      {
+        id: "apps.checkResume",
+        title: "checkResume",
+        translate: "checkResume",
+        type: "item",
+        icon: "material-outline:find_in_page",
+        url: "/apps/checkResume",
+        auth: authRoles.employer,
       },
       {
         id: "apps.profile",
