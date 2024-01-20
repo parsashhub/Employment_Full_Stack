@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { makeStyles } from "@mui/styles";
-import { Button, Icon, Paper } from "@mui/material";
+import { Button, Icon, IconButton, Paper } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { apiCaller } from "../../../../../reusable/axios";
 
 function SidebarContent(props) {
   const user = useSelector((state) => state.user.data);
+  const [value, setValue] = useState();
+
+  function onChange(ev) {
+    const files = ev.target.files;
+    setValue(files[0]);
+  }
+
+  const remove = async (ev) => {
+    ev.preventDefault();
+    const res = await apiCaller(() => axios.get(`/users/removeResume`));
+    console.log(res);
+  };
+
+  const upload = async () => {
+    const data = new FormData();
+    data.append("file", value);
+    try {
+      const res = await axios.post("/users/uploadResume", data, {
+        headers: { "Content-type": "multipart/form-data" },
+      });
+      toast.success("رزومه با موفقیت آپلود شد");
+    } catch (e) {
+      toast.error(e.message);
+    }
+  };
 
   return (
     <div className="p-0 lg:p-24 lg:ltr:pr-4 lg:rtl:pl-4 ">
@@ -26,14 +53,47 @@ function SidebarContent(props) {
           </Typography>
         </div>
         <Divider />
+        {value ? (
+          <div className="flex flex-wrap items-center justify-between gap-8 border rounded cursor-pointer p-4">
+            <Typography variant="body1">{value?.name}</Typography>
+            <IconButton onClick={remove}>
+              <Icon color="error">delete</Icon>
+            </IconButton>
+          </div>
+        ) : (
+          <label className="my-16 h-32 cursor-pointer flex items-center gap-1 justify-center border bg-transparent rounded p-2 text-2xl text-gray-600">
+            <input
+              type="file"
+              className="hidden"
+              onChange={onChange}
+              accept=".pdf,.doc,.docx"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-16 h-16"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+              />
+            </svg>
+            آپلود رزومه
+          </label>
+        )}
         <div className="p-20">
           <Button
             variant="contained"
             color="secondary"
             className="rounded-8"
+            onClick={() => upload()}
             fullWidth
           >
-            ارسال رزومه
+            بارگزاری رزومه
           </Button>
         </div>
       </Paper>

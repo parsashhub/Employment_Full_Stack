@@ -14,7 +14,6 @@ const gridProps = {
 };
 
 const Content = ({ data }) => {
-  console.log(data);
   return (
     <motion.div
       initial={{ opacity: 0 }}
