@@ -69,7 +69,7 @@ export const logoutUser = () => async (dispatch, getState) => {
   }
 
   history.push({
-    pathname: "/",
+    pathname: "/apps/advertisements",
   });
 
   dispatch(setInitialSettings());

@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(uuid())
-  email         String          @unique
-  phoneNumber   String?         @unique @db.VarChar(15)
-  firstname     String?         @db.VarChar(50)
-  lastname      String?         @db.VarChar(50)
-  password      String?         @db.VarChar(500)
-  isActive      Boolean         @default(true)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime?       @updatedAt
-  role          Role
-  Advertisement Advertisement[]
-  Resume        Resume[]
+  id                  String                @id @default(uuid())
+  email               String                @unique
+  phoneNumber         String?               @unique @db.VarChar(15)
+  firstname           String?               @db.VarChar(50)
+  lastname            String?               @db.VarChar(50)
+  password            String?               @db.VarChar(500)
+  isActive            Boolean               @default(true)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime?             @updatedAt
+  role                Role
+  Advertisement       Advertisement[]
+  Resume              Resume[]
+  AdvertisementResume AdvertisementResume[]
 }
 
 enum Role {
@@ -37,27 +38,36 @@ model Resume {
   user      User     @relation(fields: [userId], references: [id])
 }
 
+model AdvertisementResume {
+  id              Int           @id @default(autoincrement())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  advertisementId Int
+  advertisement   Advertisement @relation(fields: [advertisementId], references: [id])
+}
+
 model Advertisement {
-  id                 Int         @id @default(autoincrement())
-  title              String      @db.VarChar(255)
-  companyName        String      @db.VarChar(255)
-  companyWebsite     String      @db.VarChar(100)
-  companyLogo        String?     @db.VarChar(1000)
-  companySize        Int
-  location           String      @db.VarChar(255)
-  jobDescription     String      @db.VarChar(1000)
-  companyDescription String      @db.VarChar(1000)
-  minWorkExperience  Int
-  isShared           Boolean     @default(false)
-  salary             Float
-  createdAt          DateTime    @default(now())
-  updatedAt          DateTime?   @updatedAt
-  contractId         Int
-  contract           JobContract @relation(fields: [contractId], references: [id])
-  categoryId         Int
-  category           JobCategory @relation(fields: [categoryId], references: [id])
-  userId             String
-  user               User        @relation(fields: [userId], references: [id])
+  id                  Int                   @id @default(autoincrement())
+  title               String                @db.VarChar(255)
+  companyName         String                @db.VarChar(255)
+  companyWebsite      String                @db.VarChar(100)
+  companyLogo         String?               @db.VarChar(1000)
+  companySize         Int
+  location            String                @db.VarChar(255)
+  jobDescription      String                @db.VarChar(1000)
+  companyDescription  String                @db.VarChar(1000)
+  minWorkExperience   Int
+  isShared            Boolean               @default(false)
+  salary              Float
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime?             @updatedAt
+  contractId          Int
+  contract            JobContract           @relation(fields: [contractId], references: [id])
+  categoryId          Int
+  category            JobCategory           @relation(fields: [categoryId], references: [id])
+  userId              String
+  user                User                  @relation(fields: [userId], references: [id])
+  AdvertisementResume AdvertisementResume[]
 }
 
 model JobCategory {

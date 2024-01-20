@@ -8,9 +8,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { apiCaller } from "../../../../../reusable/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function SidebarContent(props) {
+function SidebarContent({ advertisementId }) {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.data);
   const [value, setValue] = useState();
 
@@ -45,6 +46,16 @@ function SidebarContent(props) {
       axios.delete(`/users/removeResume/${value?.id}`),
     );
     setValue();
+  };
+
+  const sendResume = async () => {
+    try {
+      const res = await axios.post("/users/sendResume", { advertisementId });
+      toast.success(res.data.message[0]);
+      navigate("/apps/advertisements");
+    } catch (e) {
+      toast.error(e.response.data.message[0] ?? e.message);
+    }
   };
 
   return (
@@ -102,9 +113,9 @@ function SidebarContent(props) {
             variant="contained"
             color="secondary"
             className="rounded-8"
-            // onClick={() => upload()}
-            fullWidth
+            onClick={() => sendResume()}
             disabled={!value}
+            fullWidth
           >
             ارسال رزومه
           </Button>

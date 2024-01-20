@@ -27,7 +27,7 @@ const AdvertisementDetailApp = () => {
     <FusePageCarded
       content={<Content data={data} />}
       scroll={isMobile ? "normal" : "content"}
-      rightSidebarContent={<SidebarContent />}
+      rightSidebarContent={<SidebarContent advertisementId={data?.id} />}
       rightSidebarOpen={rightSidebarOpen}
       rightSidebarWidth={288}
       sidebarInner

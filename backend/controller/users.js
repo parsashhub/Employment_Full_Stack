@@ -166,6 +166,32 @@ router.get("/resume", authMiddleware, async (req, res) => {
   }
 });
 
+//@description     send resume
+//@route           POST /api/users/sendResume
+//@access          protected
+router.post("/sendResume", authMiddleware, async (req, res) => {
+  const { user, body } = req;
+  if (user.role !== "JOBSEEKER")
+    return res.status(403).json({ message: ["access denied"] });
+
+  if (!body.advertisementId)
+    return res.json({
+      message: ["no body provided with the key advertisementId"],
+    });
+
+  // try {
+    await prisma.AdvertisementResume.create({
+      data: {
+        userId: user.id,
+        advertisementId: body.advertisementId,
+      },
+    });
+    res.status(201).json({ message: ["رزومه با موفقیت ارسال شد"] });
+  // } catch (e) {
+  //   res.status(500).send({ message: ["something went wrong"] });
+  // }
+});
+
 //@description     get users list
 //@route           POST /api/user
 //@access          protected admin
