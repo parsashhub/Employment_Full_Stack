@@ -6,13 +6,14 @@ import { apiCaller } from "../../../../../reusable/axios";
 import axios from "axios";
 import SidebarContent from "./sidebar";
 import Content from "./content";
+import { useSelector } from "react-redux";
 
 const AdvertisementDetailApp = () => {
   const { id } = useParams();
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
   const [data, setData] = useState();
-  const pageLayout = useRef(null);
+  const user = useSelector((state) => state.user.data);
   const getData = async () => {
     const res = await apiCaller(() => axios.get(`advertisements/${id}`));
     setData(res.data?.data);
@@ -27,7 +28,11 @@ const AdvertisementDetailApp = () => {
     <FusePageCarded
       content={<Content data={data} />}
       scroll={isMobile ? "normal" : "content"}
-      rightSidebarContent={<SidebarContent advertisementId={data?.id} />}
+      rightSidebarContent={
+        user.role === "JOBSEEKER" ? (
+          <SidebarContent advertisementId={data?.id} />
+        ) : null
+      }
       rightSidebarOpen={rightSidebarOpen}
       rightSidebarWidth={288}
       sidebarInner

@@ -19,7 +19,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import Tooltip from "@mui/material/Tooltip";
-import { tableColumns } from "../array";
+import { employerColumns, tableColumns } from "../array";
 import useThemeMediaQuery from "../../../../../@fuse/hooks/useThemeMediaQuery";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
@@ -36,8 +36,46 @@ const ExerciseContent = () => {
   const page = useSelector(selectData("page"));
   const [openD, setOpenD] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const user = useSelector((state) => state.user.data);
 
-  const columns = useMemo(() => [...tableColumns], [dispatch]);
+  const columns = useMemo(() => {
+    if (user.role === "JOBSEEKER") return tableColumns;
+    else
+      return [
+        ...employerColumns,
+        {
+          Header: "عملیات",
+          id: "action",
+          Cell: ({ row }) => {
+            return (
+              <div className="flex items-center">
+                <Tooltip title="تایید برای مصاحبه">
+                  <IconButton
+                    color="secondary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Icon>check</Icon>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="رد">
+                  <IconButton
+                    color="error"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Icon>clear</Icon>
+                  </IconButton>
+                </Tooltip>
+              </div>
+            );
+          },
+        },
+      ];
+  }, [user, dispatch]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
