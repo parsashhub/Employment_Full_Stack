@@ -199,27 +199,60 @@ router.get("/appliedJob", authMiddleware, async (req, res) => {
   const { user } = req;
   let { perPage, page, sort, search } = req.query;
 
-  if (user.role !== "JOBSEEKER")
-    return res.status(403).json({ message: ["access denied"] });
-
-  try {
+  if (user.role === "JOBSEEKER") {
+    try {
+      const results = await getPaginatedResults({
+        model: "AdvertisementResume",
+        page: page ?? 1,
+        perPage: perPage ?? 10,
+        sort,
+        where: { userId: user.id },
+        select: {
+          advertisement: {
+            include: { contract: true, category: true },
+          },
+          status: true,
+          id: true,
+        },
+      });
+      res.json(results);
+    } catch (e) {
+      res.status(500).send({ message: ["something went wrong"] });
+    }
+  } else if (user.role === "EMPLOYER") {
+    const ids = await prisma.Advertisement.findMany({
+      where: { userId: user.id },
+      select: {
+        id: true,
+      },
+    });
+    let tempArr = [];
+    ids?.forEach((item) => tempArr.push(item.id));
     const results = await getPaginatedResults({
       model: "AdvertisementResume",
       page: page ?? 1,
       perPage: perPage ?? 10,
       sort,
-      where: { userId: user.id },
+      where: {
+        advertisementId: {
+          in: tempArr,
+        },
+      },
       select: {
-        advertisement: {
-          include: { contract: true, category: true },
+        id: true,
+        advertisement: { include: { contract: true, category: true } },
+        user: {
+          select: {
+            email: true,
+            firstname: true,
+            lastname: true,
+            Resume: true,
+          },
         },
         status: true,
-        id: true,
       },
     });
     res.json(results);
-  } catch (e) {
-    res.status(500).send({ message: ["something went wrong"] });
   }
 });
 
