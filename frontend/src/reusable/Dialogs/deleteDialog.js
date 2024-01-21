@@ -28,9 +28,9 @@ const DeleteDialog = ({ open, setOpen, handleDelete, title }) => {
     >
       <DialogTitle className="mx-12">
         {title ? title : SURE_TO_DELETE}
-        <Typography variant="subtitle1" color="error">
-          توجه: این عمل قابل بازگشت نیست
-        </Typography>
+        {/*<Typography variant="subtitle1" color="error">*/}
+        {/*  توجه: این عمل قابل بازگشت نیست*/}
+        {/*</Typography>*/}
       </DialogTitle>
       <DialogActions className="justify-around mb-8">
         <Button

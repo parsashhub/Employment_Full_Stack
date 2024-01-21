@@ -12,7 +12,12 @@ import {
   Paper,
 } from "@mui/material";
 import EnhancedTable from "../../../../../reusable/Table";
-import { getAppliedJobs, selectAppliedJobs, selectData } from "../store/slice";
+import {
+  getAppliedJobs,
+  selectAppliedJobs,
+  selectData,
+  updateResumeState,
+} from "../store/slice";
 import { useDispatch, useSelector } from "react-redux";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -24,6 +29,8 @@ import useThemeMediaQuery from "../../../../../@fuse/hooks/useThemeMediaQuery";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import WrapperDrawer from "../../../../../reusable/Dialogs/myDrawer";
+import Dialog from "../../../../../reusable/Dialogs/deleteDialog";
+import { removeAdvertisement } from "../../advertisement/store/slice";
 
 const ExerciseContent = () => {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -36,6 +43,10 @@ const ExerciseContent = () => {
   const page = useSelector(selectData("page"));
   const [openD, setOpenD] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [openAcc, setOpenAcc] = useState(false);
+  const [handleAccept, setHandleAccept] = useState(() => () => {});
+  const [openRej, setOpenRej] = useState(false);
+  const [handleReject, setHandleReject] = useState(() => () => {});
   const user = useSelector((state) => state.user.data);
 
   const columns = useMemo(() => {
@@ -43,34 +54,60 @@ const ExerciseContent = () => {
     else
       return [
         ...employerColumns,
+
         {
           Header: "عملیات",
           id: "action",
           Cell: ({ row }) => {
-            return (
-              <div className="flex items-center">
-                <Tooltip title="تایید برای مصاحبه">
-                  <IconButton
-                    color="secondary"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Icon>check</Icon>
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="رد">
-                  <IconButton
-                    color="error"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Icon>clear</Icon>
-                  </IconButton>
-                </Tooltip>
-              </div>
-            );
+            if (row.original.status === "NOT_SEEN")
+              return (
+                <div className="flex items-center">
+                  <Tooltip title="تایید برای مصاحبه">
+                    <IconButton
+                      color="secondary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenAcc(true);
+                        setHandleAccept(() => async () => {
+                          setOpenAcc(false);
+                          await Promise.all([
+                            dispatch(
+                              updateResumeState({
+                                id: row.original.id,
+                                formValue: { state: "ACCEPTED" },
+                              }),
+                            ),
+                          ]);
+                        });
+                      }}
+                    >
+                      <Icon>check</Icon>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="رد">
+                    <IconButton
+                      color="error"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenRej(true);
+                        setHandleReject(() => async () => {
+                          setOpenRej(false);
+                          await Promise.all([
+                            dispatch(
+                              updateResumeState({
+                                id: row.original.id,
+                                formValue: { state: "REJECTED" },
+                              }),
+                            ),
+                          ]);
+                        });
+                      }}
+                    >
+                      <Icon>clear</Icon>
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              );
           },
         },
       ];
@@ -158,6 +195,18 @@ const ExerciseContent = () => {
           }}
         />
       </Paper>
+      <Dialog
+        open={openAcc}
+        setOpen={setOpenAcc}
+        handleDelete={handleAccept}
+        title={"آیا از تایید اطمینان دارید؟"}
+      />
+      <Dialog
+        open={openRej}
+        setOpen={setOpenRej}
+        handleDelete={handleReject}
+        title={"آیا از رد اطمینان دارید؟"}
+      />
       <WrapperDrawer
         title="مرتب سازی"
         open={openD}

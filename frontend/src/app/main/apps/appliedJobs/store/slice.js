@@ -7,7 +7,6 @@ import {
 import { toast } from "react-toastify";
 import axios from "axios";
 import { NO_DATA_FOUND } from "../../../../../reusable/messages";
-import { apiCaller } from "../../../../../reusable/axios";
 
 export const getAppliedJobs = createAsyncThunk(
   "appliedJobs/slice/getAppliedJobs",
@@ -28,6 +27,19 @@ export const getAppliedJobs = createAsyncThunk(
       return { ...response?.data, sort, perPage, page };
     } catch (error) {
       toast.error(error.message);
+    }
+  },
+);
+
+export const updateResumeState = createAsyncThunk(
+  "appliedJobs/slice/updateResumeState",
+  async ({ id, formValue }, { dispatch }) => {
+    try {
+      const res = await axios.put(`/users/changeResumeState/${id}`, formValue);
+      toast.success(res.data.message[0]);
+      dispatch(getAppliedJobs({}));
+    } catch (e) {
+      toast.error(e.response?.data?.message[0] ?? e.message);
     }
   },
 );

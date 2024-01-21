@@ -179,17 +179,41 @@ router.post("/sendResume", authMiddleware, async (req, res) => {
       message: ["no body provided with the key advertisementId"],
     });
 
-  // try {
-  await prisma.AdvertisementResume.create({
-    data: {
-      userId: user.id,
-      advertisementId: body.advertisementId,
-    },
-  });
-  res.status(201).json({ message: ["رزومه با موفقیت ارسال شد"] });
-  // } catch (e) {
-  //   res.status(500).send({ message: ["something went wrong"] });
-  // }
+  try {
+    await prisma.AdvertisementResume.create({
+      data: {
+        userId: user.id,
+        advertisementId: body.advertisementId,
+      },
+    });
+    res.status(201).json({ message: ["رزومه با موفقیت ارسال شد"] });
+  } catch (e) {
+    res.status(500).send({ message: ["something went wrong"] });
+  }
+});
+
+//@description     send resume
+//@route           POST /api/users/sendResume
+//@access          protected
+router.put("/changeResumeState/:id", authMiddleware, async (req, res) => {
+  const { user, body, params } = req;
+
+  if (!body.state)
+    return res.json({
+      message: ["no body provided with the key advertisementId"],
+    });
+
+  try {
+    await prisma.AdvertisementResume.update({
+      where: { id: parseInt(params.id) },
+      data: {
+        status: body.state,
+      },
+    });
+    res.json({ message: ["وضعیت با موفقیت بروزرسانی شد"] });
+  } catch (e) {
+    res.status(500).send({ message: ["something went wrong"] });
+  }
 });
 
 //@description     get applied list resume
