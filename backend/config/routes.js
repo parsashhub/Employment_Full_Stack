@@ -11,7 +11,9 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 module.exports = function (app) {
   app.use(express.json());
-  app.use(cors({ credentials: true, origin: "http://localhost:3005" }));
+  const allowedOrigins = ["http://localhost:3005", "http://localhost:3000"];
+
+  app.use(cors({ credentials: true, origin: allowedOrigins }));
   app.use(cookieParser());
 
   app.use("/api/auth", auth);

@@ -9,7 +9,7 @@ const { ERROR_500, UPDATE, DELETE, CREATE } = require("../config/message");
 //@description     get job category list
 //@route           GET /api/jobCategories
 //@access          protected
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     let { perPage, page, sort, search } = req.query;
     const results = await getPaginatedResults({

@@ -21,8 +21,8 @@ const AdvertisementApp = () => {
 
   return (
     <FusePageCarded
-      header={<Header />}
-      content={<Content data={list}/>}
+      header={<Header setList={setList} />}
+      content={<Content data={list} setList={setList} />}
       scroll={isMobile ? "normal" : "content"}
     />
   );

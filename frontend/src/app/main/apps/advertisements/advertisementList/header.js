@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
@@ -6,9 +6,25 @@ import { useSelector } from "react-redux";
 import { Icon, IconButton, Paper } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import Input from "@mui/material/Input";
+import { useDebounce } from "use-debounce";
+import { apiCaller } from "../../../../../reusable/axios";
+import axios from "axios";
 
-const Header = () => {
+const Header = ({ setList }) => {
   const mainTheme = useSelector(selectMainTheme);
+  const [value, setValue] = useState("");
+  const [debounced] = useDebounce(value, 500);
+
+  const getData = async () => {
+    const res = await apiCaller(() =>
+      axios.get(`advertisements/list?search=${debounced}`),
+    );
+    setList(res.data?.data);
+  };
+
+  useEffect(() => {
+    if (debounced) getData();
+  }, [debounced]);
 
   return (
     <div className="flex flex-col md:flex-row flex-1 w-full space-y-8 sm:space-y-0 items-center justify-between py-20 px-24 md:px-32">
@@ -37,10 +53,17 @@ const Header = () => {
               className="flex flex-1 px-16"
               disableUnderline
               fullWidth
-              // value={searchText}
-              onChange={(e) => {}}
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
             />
-            <IconButton onClick={() => {}}>
+            <IconButton
+              onClick={() => {
+                setValue("");
+                getData();
+              }}
+            >
               <Icon color="error">delete</Icon>
             </IconButton>
           </Paper>
