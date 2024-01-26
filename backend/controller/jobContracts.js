@@ -5,7 +5,7 @@ const _ = require("lodash");
 const isAdmin = require("../middleware/isAdmin");
 const { getPaginatedResults } = require("../config/utils");
 const { ERROR_500 } = require("../config/message");
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     let { perPage, page, sort, search } = req.query;
     const results = await getPaginatedResults({

@@ -51,7 +51,13 @@ router.get("/", authMiddleware, async (req, res) => {
 //@access          public
 router.get("/list", async (req, res) => {
   try {
-    let { perPage, page, sort, search } = req.query;
+    let { perPage, page, sort, search, categoryId, contractId } = req.query;
+
+    const andConditions = [];
+    if (categoryId) andConditions.push({ categoryId: Number(categoryId) });
+    if (contractId) andConditions.push({ contractId: Number(contractId) });
+    andConditions.push({ isShared: true });
+
     const result = await getPaginatedResults({
       model: "Advertisement",
       page: page ?? 1,
@@ -59,7 +65,9 @@ router.get("/list", async (req, res) => {
       searchColumns: ["title", "companyName", "location"],
       searchText: search,
       sort,
-      where: { isShared: true },
+      where: {
+        AND: andConditions,
+      },
       include: {
         contract: true,
         category: true,

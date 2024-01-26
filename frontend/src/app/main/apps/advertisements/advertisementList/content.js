@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -8,14 +8,23 @@ import {
   CardActions,
   CardContent,
   Icon,
+  MenuItem,
   Paper,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { FIELD_REQUIRED } from "../../../../../reusable/messages";
+import utils, { getJobCategories, getJobContracts } from "app/store/utilsSlice";
+import FormikHook, {
+  createFormikObjects,
+} from "../../../../../reusable/Form/FormikCustomHook";
+import { apiCaller } from "../../../../../reusable/axios";
+import axios from "axios";
 
 const sortOptions = [
   { sort: "title_1", label: "صعودی عنوان آگهی" },
@@ -23,10 +32,119 @@ const sortOptions = [
   { sort: "salary_1", label: "بیشترین حقوق" },
   { sort: "createdAt_0", label: "جدید ترین آگهی ها" },
 ];
-const Content = ({ data }) => {
+const Content = ({ data, setList }) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.data);
   const [expanded, setExpanded] = useState(false);
+  const dispatch = useDispatch();
+  const { jobCategories, jobContracts } = useSelector(({ utils }) => utils);
+
+  useEffect(() => {
+    if (jobContracts.length === 0) dispatch(getJobContracts({}));
+    if (jobCategories.length === 0) dispatch(getJobCategories({}));
+  }, [jobContracts, jobCategories]);
+
+  const filters = useMemo(
+    () => [
+      {
+        type: "Select",
+        label: "قرارداد",
+        name: "contractId",
+        validation: yup.string(),
+        options: jobContracts,
+        grouped: true,
+        renderMenuItem: (data) =>
+          data?.map((item) => {
+            return (
+              <MenuItem key={item.id} value={item.id}>
+                <div>
+                  <Typography variant="subtitle1">{item?.title}</Typography>
+                </div>
+              </MenuItem>
+            );
+          }),
+        grids: { xs: 12, sm: 12, md: 4, xl: 3 },
+      },
+      {
+        type: "Select",
+        label: "دسته بندی شغلی",
+        name: "categoryId",
+        validation: yup.string(),
+        options: jobCategories,
+        grouped: true,
+        renderMenuItem: (data) =>
+          data?.map((item) => {
+            return (
+              <MenuItem key={item.id} value={item.id}>
+                <div>
+                  <Typography variant="subtitle1">{item?.title}</Typography>
+                </div>
+              </MenuItem>
+            );
+          }),
+        grids: { xs: 12, sm: 12, md: 4, xl: 3 },
+      },
+      {
+        type: "Custom",
+        name: "btn1",
+        component: (
+          <Button
+            variant="contained"
+            color="secondary"
+            className="w-full mt-16 rounded-8"
+            aria-label="Sign in"
+            size="large"
+            onClick={() => formik?.handleSubmit()}
+          >
+            اعمال فیلتر
+          </Button>
+        ),
+        grids: { xs: 12, md: 2, sm: 12, xl: 3 },
+      },
+      {
+        type: "Custom",
+        name: "btn2",
+        component: (
+          <Button
+            variant="contained"
+            color="error"
+            className="w-full mt-16 rounded-8"
+            aria-label="Sign in"
+            size="large"
+            onClick={() => {
+              formik?.resetForm();
+              formik?.handleSubmit();
+            }}
+          >
+            حذف فیلتر
+          </Button>
+        ),
+        grids: { xs: 12, md: 2, sm: 12, xl: 3 },
+      },
+    ],
+    [jobContracts, jobCategories],
+  );
+
+  const { initialValues, validationSchema } = createFormikObjects(filters);
+  const [form, formik] = FormikHook(
+    {
+      inputData: filters,
+      initialValues,
+      validationSchema,
+    },
+    async (formValue) => {
+      let filters = "";
+      for (let key in formValue) {
+        if (formValue[key] !== "" && formValue[key] !== undefined) {
+          filters += `&${key}=${formValue[key]}`;
+        }
+      }
+      const res = await apiCaller(() =>
+        axios.get(`advertisements/list?page=1${filters}`),
+      );
+      setList(res.data?.data);
+    },
+  );
 
   return (
     <motion.div
@@ -42,9 +160,7 @@ const Content = ({ data }) => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>فیلتر ها</Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{/*  form goes here */}</Typography>
-          </AccordionDetails>
+          <AccordionDetails>{form}</AccordionDetails>
         </Accordion>
         <div className="flex flex-wrap items-center justify-start gap-8 mt-16 px-16">
           <Icon>sort</Icon>
