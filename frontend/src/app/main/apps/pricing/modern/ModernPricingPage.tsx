@@ -318,86 +318,92 @@ function ModernPricingPage() {
           </div>
         </div>
       </div>
-
-      <Paper className="flex flex-col items-center px-24 py-40 sm:px-64 sm:pt-72 sm:pb-80">
-        <div className="w-full max-w-7xl">
-          <div>
-            <Typography className="text-4xl font-extrabold tracking-tight leading-tight">
-              Everything you need to build efficiently
-            </Typography>
-            <Typography
-              className="max-w-xl mt-2 text-xl"
-              color="text.secondary"
-            >
-              Start building your app using our tools, be efficient, spend less
-              time with details more time with your business
-            </Typography>
-          </div>
-          <div className="grid grid-cols-1 gap-x-24 gap-y-48 sm:grid-cols-2 lg:grid-cols-3 lg:gap-64 w-full mt-48 sm:mt-64">
-            <ModernPricingFeatureItem
-              icon="heroicons-outline:pencil-alt"
-              title="Create and Edit Projects"
-              subtitle="Create and edit projects, upload images via drag drop, add categories, add custom
-                fields, create interactive forms and more."
-            />
-            <ModernPricingFeatureItem
-              icon="heroicons-outline:filter"
-              title="Search and Filter"
-              subtitle="Search and filter within the projects, categories and custom fields. Save search and
-                filter details for easy access."
-            />
-            <ModernPricingFeatureItem
-              icon="heroicons-outline:refresh"
-              title="Real Time Updates"
-              subtitle="Real time updates that doesn't require page reload. Lean back and watch the changes
-                happen in real time."
-            />
-            <ModernPricingFeatureItem
-              icon="heroicons-outline:tag"
-              title="Meta Information"
-              subtitle="Add and remove meta information to custom fields to differentiate them in reports and analytics results, use them for detailed reports."
-            />
-            <ModernPricingFeatureItem
-              icon="heroicons-outline:document-text"
-              title="Pre-rendered Results"
-              subtitle="Pre-render results to make reports and analytics more accessible by screen readers
-                and other accessibility tools."
-            />
-            <ModernPricingFeatureItem
-              icon="heroicons-outline:chart-square-bar"
-              title="Simple Analytics"
-              subtitle="Simple analytics with no unnecessary data flow or weight. More readable results with
-                less data consumption."
-            />
-          </div>
-        </div>
-      </Paper>
       <Box
         sx={{ backgroundColor: "primary.main", color: "primary.contrastText" }}
         className="px-24 py-40 sm:py-48 sm:px-64"
       >
         <div className="flex flex-col items-center w-full max-w-7xl mx-auto text-center">
           <Typography className="text-3xl sm:text-4xl sm:text-5xl font-extrabold leading-6 sm:leading-10">
-            Boost your productivity.
+            شرکتت و محصولت رو ارتقا بده!
           </Typography>
           <Typography
             className="mt-8 text-3xl sm:text-4xl sm:text-5xl font-extrabold leading-6 sm:leading-10"
             color="text.secondary"
           >
-            Start using Fuse today.
+            با کارینجا
           </Typography>
           <Button
             className="mt-32 px-48 text-lg"
             size="large"
             color="secondary"
             variant="contained"
+            href="/sign-in"
           >
-            Sign up for free
+            ثبت نام
           </Button>
         </div>
       </Box>
 
-      <div className="flex flex-col items-center pt-12 sm:pt-72 pb-32 sm:pb-80 px-24 sm:px-64">
+      <Paper className="flex flex-col items-center px-24 py-40 sm:px-64 sm:pt-72 sm:pb-80">
+        <div className="w-full max-w-7xl">
+          <div>
+            <Typography className="text-4xl font-extrabold tracking-tight leading-tight">
+            همه چیزهایی که برای پروژه کارآمد نیاز دارید!
+            </Typography>
+            <Typography
+              className="max-w-xl mt-2 text-xl"
+              color="text.secondary"
+            >
+              با "کارینجا"، استخدام کارآمدتر بدون استرس و دردسر؛ به راحتی در دستان شماست.
+            </Typography>
+          </div>
+          <div className="grid grid-cols-1 gap-x-24 gap-y-48 sm:grid-cols-2 lg:grid-cols-3 lg:gap-64 w-full mt-48 sm:mt-64">
+            {/* <ModernPricingFeatureItem
+              icon="heroicons-outline:pencil-alt"
+              title="Create and Edit Projects"
+              subtitle="Create and edit projects, upload images via drag drop, add categories, add custom
+                fields, create interactive forms and more."
+            /> */}
+            <ModernPricingFeatureItem
+              icon="heroicons-outline:search"
+              title="جستجوی پیشرفته"
+              subtitle="امکان استفاده از فیلتر ها و جستجوی پیشرفته برای یافتن کارمندان و پروژه های مطابق با نیازهای شما."
+            />
+            <ModernPricingFeatureItem
+              icon="heroicons-outline:refresh"
+              title="ثبت نظرات و پیشنهادات"
+              subtitle="امکان ایجاد سیستمی برای کاربران به منظور بهاگذاری کارفرماها و انتشار نتایج آن در صفحه کارفرماها"
+            />
+            {/* <ModernPricingFeatureItem
+              icon="heroicons-outline:refresh"
+              title="Real Time Updates"
+              subtitle="Real time updates that doesn't require page reload. Lean back and watch the changes
+                happen in real time."
+            /> */}
+            <ModernPricingFeatureItem
+              icon="heroicons-outline:tag"
+              title="سیستم هوشمند پیشنهاد کارجو و یا پروژه"
+              subtitle="پیشنهاد پروژه به کارجو و یا پیشنهاد کارجو به کارفرما به صورت هوشمند بر اساس روزمه و عملکرد و اطلاعات موجود"
+            />
+            <ModernPricingFeatureItem
+              icon="heroicons-outline:document-text"
+              title="اطلاعات شرکت ها"
+              subtitle="امکان مشاهده اطلاعات کامل و رتبه بندی شرکت ها و کارفرمایان موجود در سایت"
+            />
+            <ModernPricingFeatureItem
+              icon="heroicons-outline:chart-square-bar"
+              title="صفحه شخصی کارجویان"
+              subtitle=" امکان ایجاد صفحه های شخصی برای کارجویان با اطلاعات کامل و رزومه های آپلود شده، به منظور نمایش مهارت ها و تجربیات آنها"
+            />
+            <ModernPricingFeatureItem
+              icon="heroicons-outline:user"
+              title="پشتیبانی آنلاین"
+              subtitle="امکان پاسخگویی به سوالات کارجویان و کارفرمایان به صورت آنلاین در طول شب و روز و در تمام هفته"
+            />
+          </div>
+        </div>
+      </Paper>
+      {/* <div className="flex flex-col items-center pt-12 sm:pt-72 pb-32 sm:pb-80 px-24 sm:px-64">
         <div className="w-full max-w-7xl">
           <div>
             <Typography className="text-4xl font-extrabold tracking-tight leading-tight">
@@ -467,7 +473,7 @@ function ModernPricingPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
