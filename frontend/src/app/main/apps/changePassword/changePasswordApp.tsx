@@ -125,7 +125,6 @@ function ChangePasswordApp() {
             component={motion.span}
             initial={{ x: -20 }}
             animate={{ x: 0, transition: { delay: 0.2 } }}
-            delay={300}
             className="flex text-24 md:text-28 font-bold tracking-tight"
           >
             تغییر رمز عبور

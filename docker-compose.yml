@@ -19,7 +19,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - "3005:3000"
+      - "3005:3005"
     volumes:
       - ./frontend:/app/frontend
     command: npm start
