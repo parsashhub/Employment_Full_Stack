@@ -28,12 +28,14 @@ import {
   useGetJobCategoriesQuery,
   useGetJobContractsQuery,
 } from "app/store/utils";
+import { toast } from "react-toastify";
+import { NO_DATA_FOUND } from "../../../../../reusable/messages";
 
 const sortOptions = [
   { sort: "title_1", label: "صعودی عنوان آگهی" },
   { sort: "title_0", label: "نزولی عنوان آگهی" },
   { sort: "salary_1", label: "بیشترین حقوق" },
-  { sort: "createdAt_0", label: "جدید ترین آگهی ها" },
+  { sort: "createdAt_1", label: "جدید ترین آگهی ها" },
 ];
 const Content = ({ data, setList }) => {
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const Content = ({ data, setList }) => {
             return (
               <MenuItem key={item.id} value={item.id}>
                 <div>
-                  <Typography variant="subtitle1">{item?.title}</Typography>
+                  <Typography variant="body1">{item?.title}</Typography>
                 </div>
               </MenuItem>
             );
@@ -82,7 +84,7 @@ const Content = ({ data, setList }) => {
             return (
               <MenuItem key={item.id} value={item.id}>
                 <div>
-                  <Typography variant="subtitle1">{item?.title}</Typography>
+                  <Typography variant="body1">{item?.title}</Typography>
                 </div>
               </MenuItem>
             );
@@ -143,13 +145,17 @@ const Content = ({ data, setList }) => {
         if (formValue[key] !== "" && formValue[key] !== undefined) {
           filters += `&${key}=${formValue[key]}`;
         }
+        callApi(filters);
       }
-      const res = await apiCaller(() =>
-        axios.get(`advertisements/list?page=1${filters}`),
-      );
-      setList(res.data?.data);
     },
   );
+  const callApi = async (input) => {
+    const res = await apiCaller(() =>
+      axios.get(`advertisements/list?page=1${input}`),
+    );
+    if (res.data?.data.length === 0) toast.info(NO_DATA_FOUND);
+    setList(res.data?.data);
+  };
 
   return (
     <motion.div
@@ -177,7 +183,9 @@ const Content = ({ data, setList }) => {
               <Paper
                 elevation={10}
                 key={sort}
-                onClick={() => {}}
+                onClick={() => {
+                  callApi(`&sort=${sort}`);
+                }}
                 className="p-8 cursor-pointer rounded-8"
               >
                 {label}
@@ -196,14 +204,14 @@ const Content = ({ data, setList }) => {
               key={item.id}
               item
               xs={12}
-              md={4}
-              lg={4}
-              xl={3}
-              className="flex items-center justify-center"
+              md={6}
+              lg={6}
+              xl={6}
+              className="flex items-center justify-center gap-8"
             >
               <Card
                 sx={{
-                  maxWidth: 300,
+                  width: "90%",
                   transition: "transform 0.3s",
                   "&:hover": {
                     transform: "scale(1.05)",

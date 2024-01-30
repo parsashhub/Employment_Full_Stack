@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const _ = require("lodash");
 const authMiddleware = require("../middleware/authMiddleware");
-const isEmployer = require("../middleware/isEmployer");
-const isAdmin = require("../middleware/isAdmin");
 const Joi = require("joi");
 const prisma = require("../prisma/client");
 const { getPaginatedResults } = require("../config/utils");
@@ -166,16 +163,15 @@ router.delete("/:id", authMiddleware, async (req, res) => {
       where: { id: parseInt(params.id) },
     });
     if (!isExisting) return res.status(404).json({ message: [NOT_FOUND] });
-
     if (isExisting.userId !== user.id)
       return res.status(403).json({
-        message: "هر کاربر فقط آگهی های مربوط به خود را می تواند حذف کند",
+        message: ["هر کاربر فقط آگهی های مربوط به خود را می تواند حذف کند"],
       });
 
     await prisma.Advertisement.delete({ where: { id: parseInt(params.id) } });
     res.json({ message: [DELETE_ADVERTISEMENT] });
   } catch (e) {
-    res.status(500).json({ message: [ERROR_500] });
+    res.status(400).json({ message: ["این آگهی قابلیت حذف شدن ندارد"] });
   }
 });
 

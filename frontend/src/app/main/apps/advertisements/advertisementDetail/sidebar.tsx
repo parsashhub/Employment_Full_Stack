@@ -17,7 +17,7 @@ function SidebarContent({ advertisementId }) {
   const [value, setValue] = useState<any>();
 
   const checkResume = async () => {
-    const res = await apiCaller(() => axios.get(`/users/resume`));
+    const res = await apiCaller(() => axios.get(`/resumes`));
     setValue(res.data?.data);
   };
 
@@ -31,7 +31,7 @@ function SidebarContent({ advertisementId }) {
     const data = new FormData();
     data.append("file", files[0]);
     try {
-      const res = await axios.post("/users/uploadResume", data, {
+      const res = await axios.post("/resumes/upload", data, {
         headers: { "Content-type": "multipart/form-data" },
       });
       toast.success("رزومه با موفقیت آپلود شد");
@@ -44,14 +44,14 @@ function SidebarContent({ advertisementId }) {
   const remove = async (ev) => {
     ev.preventDefault();
     const res = await apiCaller(() =>
-      axios.delete(`/users/removeResume/${value?.id}`),
+      axios.delete(`/resumes/${value?.id}`),
     );
     setValue(undefined);
   };
 
   const sendResume = async () => {
     try {
-      const res = await axios.post("/users/sendResume", { advertisementId });
+      const res = await axios.post("/resumes/send", { advertisementId });
       toast.success(res.data.message[0]);
       navigate("/apps/advertisements");
     } catch (e) {

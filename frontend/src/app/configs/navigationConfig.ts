@@ -33,7 +33,7 @@ const navigationConfig: FuseNavItemType[] = [
         auth: authRoles.admin,
       },
       {
-        id: "apps.advertisement",
+        id: "apps.advertisement2",
         title: "Advertisement",
         translate: "Advertisement",
         type: "item",

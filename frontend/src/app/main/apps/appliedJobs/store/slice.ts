@@ -17,7 +17,7 @@ export const getAppliedJobs = createAsyncThunk(
     search = search || getState().appliedJobs.slice.searchText;
 
     try {
-      let baseUrl = `/users/appliedJob?perPage=${perPage}&sort=${sort}&page=${page}`;
+      let baseUrl = `/resumes/appliedJob?perPage=${perPage}&sort=${sort}&page=${page}`;
       const response = await axios.get(
         search ? `${baseUrl}&search=${search}` : baseUrl,
       );
@@ -35,7 +35,7 @@ export const updateResumeState = createAsyncThunk(
   "appliedJobs/slice/updateResumeState",
   async ({ id, formValue }: any, { dispatch }: any) => {
     try {
-      const res = await axios.put(`/users/changeResumeState/${id}`, formValue);
+      const res = await axios.put(`/resumes/changeResumeState/${id}`, formValue);
       toast.success(res.data.message[0]);
       dispatch(getAppliedJobs({}));
     } catch (e) {

@@ -62,7 +62,7 @@ export const dialogForm = [
     name: "salary",
     validation: yup.number().required(FIELD_REQUIRED),
     others: {
-      placeholder: "در صورت توافقی بودن خالی بگذارید",
+      // placeholder: "در صورت توافقی بودن خالی بگذارید",
       onKeyDown: typeOnlyNumber,
     },
     grids: grids,

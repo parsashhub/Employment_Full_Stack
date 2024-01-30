@@ -8,8 +8,13 @@ import FusePageCarded from "@fuse/core/FusePageCarded";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 import axios from "axios";
-import {FIELD_REQUIRED, MIN_LENGTH_PASSWORD} from "../../../../reusable/messages";
-import FormikHook, {createFormikObjects} from "../../../../reusable/Form/FormikHook";
+import {
+  FIELD_REQUIRED,
+  MIN_LENGTH_PASSWORD,
+} from "../../../../reusable/messages";
+import FormikHook, {
+  createFormikObjects,
+} from "../../../../reusable/Form/FormikHook";
 
 function ChangePasswordApp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -53,12 +58,12 @@ function ChangePasswordApp() {
           .min(8, MIN_LENGTH_PASSWORD)
           .matches(
             /(?=.*[a-z])(?=.*[A-Z])\w+/,
-            "رمز عبور باید حداقل یک کاراکتر بزرگ و کوچک داشته باشد"
+            "رمز عبور باید حداقل یک کاراکتر بزرگ و کوچک داشته باشد",
           )
           .matches(/\d/, "رمز عبور باید حداقل یک عدد داشته باشد")
           .matches(
             /[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/,
-            "رمز عبور باید حداقل یک کاراکتر خاص داشته باشد"
+            "رمز عبور باید حداقل یک کاراکتر خاص داشته باشد",
           ),
         others: {
           type: showNewPassword ? "text" : "password",
@@ -91,7 +96,7 @@ function ChangePasswordApp() {
         grids: { xs: 12, sm: 12, md: 6 },
       },
     ],
-    [showPassword, showNewPassword]
+    [showPassword, showNewPassword],
   );
 
   const { initialValues, validationSchema } = createFormikObjects(formData);
@@ -101,7 +106,7 @@ function ChangePasswordApp() {
       initialValues,
       validationSchema,
     },
-    (values) => submitForm(values)
+    (values) => submitForm(values),
   );
 
   const submitForm = async (values) => {
@@ -112,12 +117,13 @@ function ChangePasswordApp() {
     try {
       const res = await axios.post("/users/changePassword", data);
       toast.success(res.data.message[0]);
+      formik?.resetForm();
     } catch (e) {
-      toast.error(e.response.data.messages[0] ?? e.message);
+      toast.error(e.response.data.message[0] ?? e.message);
     }
   };
 
-    return (
+  return (
     <FusePageCarded
       header={
         <div className="flex flex-col sm:flex-row flex-1 w-full space-y-8 sm:space-y-0 items-center justify-between py-32 px-24 md:px-32">

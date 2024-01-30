@@ -1,6 +1,6 @@
 import { useAuth } from "../../auth/AuthRouteProvider";
 import { AxiosError } from "axios/index";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FIELD_REQUIRED } from "../../../reusable/messages";
 import FormikHook, {
   createFormikObjects,
@@ -70,6 +70,19 @@ function SignInPage() {
       console.log(error.message);
     });
   }
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      formik?.handleSubmit();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-1 min-w-0">
