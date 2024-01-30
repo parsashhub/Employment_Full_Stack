@@ -19,7 +19,7 @@ function ModernPricingCard(props) {
       {isPopular && (
         <div className="absolute inset-x-0 -top-16 flex items-center justify-center">
           <Chip
-            label="POPULAR"
+            label="محبوب"
             color="secondary"
             className="flex items-center h-32 px-32 rounded-full font-medium text-center leading-none"
           />
@@ -35,27 +35,27 @@ function ModernPricingCard(props) {
       <Divider className="w-32 h-4 my-40 rounded bg-accent" />
 
       <div className="flex items-baseline whitespace-nowrap">
-        <Typography className="mr-8 text-2xl">USD</Typography>
-        <Typography className="text-6xl font-semibold leading-tight tracking-tight">
+      <Typography className="text-6xl font-semibold leading-tight tracking-tight">
           {period === 'month' && monthlyPrice}
           {period === 'year' && yearlyPrice}
         </Typography>
+        <Typography className="mr-8 text-2xl">هزار تومان</Typography>
       </div>
 
       <Typography className="flex flex-col mt-8" color="text.secondary">
         {period === 'month' && (
           <>
-            <span>billed monthly</span>
+            <span>ماهانه</span>
             <span>
-              <b>{yearlyPrice}</b> billed yearly
+              <b>{yearlyPrice}</b> سالانه برای هر ماه
             </span>
           </>
         )}
         {period === 'year' && (
           <>
-            <span>billed yearly</span>
+            <span>سالانه برای هر ماه</span>
             <span>
-              <b>{monthlyPrice}</b> billed monthly
+              <b>{monthlyPrice}</b> ماهانه
             </span>
           </>
         )}

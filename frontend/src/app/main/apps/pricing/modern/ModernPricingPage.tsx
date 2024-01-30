@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { darken } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import ModernPricingCard from './ModernPricingCard.js';
-import ModernPricingFeatureItem from './ModernPricingFeatureItem.js';
+import { useState } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { darken } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+import ModernPricingCard from "./ModernPricingCard.js";
+import ModernPricingFeatureItem from "./ModernPricingFeatureItem.js";
 
 function ModernPricingPage() {
-  const [period, setPeriod] = useState('month');
+  const [period, setPeriod] = useState("month");
 
   const container = {
     show: {
@@ -39,7 +39,7 @@ function ModernPricingPage() {
         >
           <Box
             component="g"
-            sx={{ color: 'divider' }}
+            sx={{ color: "divider" }}
             className="opacity-20"
             fill="none"
             stroke="currentColor"
@@ -54,7 +54,7 @@ function ModernPricingPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.05 } }}
           >
-            <h2 className="text-xl font-semibold">PRICING</h2>
+            <h2 className="text-xl font-semibold">{"قیمت گذاری"}</h2>
           </motion.div>
 
           <motion.div
@@ -62,7 +62,7 @@ function ModernPricingPage() {
             animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
           >
             <div className="mt-4 text-4xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
-              Take control of your productivity
+              {"بهره‌وری خود را در دست بگیرید!"}
             </div>
           </motion.div>
 
@@ -74,41 +74,51 @@ function ModernPricingPage() {
               className="mt-12 sm:text-2xl text-center tracking-tight"
               color="text.secondary"
             >
-              Start small and free, upgrade as you go.
+              {"از پایه و رایگان شروع کنید."}
               <br />
-              Take control of everything.
+              {"همه چیز را کنترل کنید!"}
             </Typography>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.2 } }}
+          >
             <Box
               className="flex items-center mt-32 sm:mt-64 p-2 rounded-full overflow-hidden"
-              sx={{ backgroundColor: (theme) => darken(theme.palette.background.default, 0.05) }}
+              sx={{
+                backgroundColor: (theme) =>
+                  darken(theme.palette.background.default, 0.05),
+              }}
             >
               <Box
                 component="button"
                 className={clsx(
-                  'h-40 items-center px-16 cursor-pointer rounded-full font-medium',
-                  period === 'year' && 'shadow'
+                  "h-40 items-center px-16 cursor-pointer rounded-full font-medium",
+                  period === "year" && "shadow"
                 )}
-                onClick={() => setPeriod('year')}
-                sx={{ backgroundColor: period === 'year' ? 'background.paper' : '' }}
+                onClick={() => setPeriod("year")}
+                sx={{
+                  backgroundColor: period === "year" ? "background.paper" : "",
+                }}
                 type="button"
               >
-                Yearly billing
+                {"سالانه"}
               </Box>
 
               <Box
                 component="button"
                 className={clsx(
-                  'h-40 items-center px-16 cursor-pointer rounded-full font-medium',
-                  period === 'month' && 'shadow'
+                  "h-40 items-center px-16 cursor-pointer rounded-full font-medium",
+                  period === "month" && "shadow"
                 )}
-                onClick={() => setPeriod('month')}
-                sx={{ backgroundColor: period === 'month' ? 'background.paper' : '' }}
+                onClick={() => setPeriod("month")}
+                sx={{
+                  backgroundColor: period === "month" ? "background.paper" : "",
+                }}
                 type="button"
               >
-                Monthly billing
+                {"ماهانه"}
               </Box>
             </Box>
           </motion.div>
@@ -125,21 +135,25 @@ function ModernPricingPage() {
               <motion.div variants={item}>
                 <ModernPricingCard
                   period={period}
-                  title="Personal"
-                  subtitle="Perfect for an individual or a small team starting to get bigger"
-                  yearlyPrice="$9.00"
-                  monthlyPrice="$6.00"
-                  buttonTitle="Get Started"
+                  title="شخصی"
+                  // subtitle="Perfect for an individual or a small team starting to get bigger"
+                  subtitle={`استخدام توسط "کارینجا" برای پروژه های شما`}
+                  yearlyPrice="80"
+                  monthlyPrice="100"
+                  buttonTitle="امتحان کنید"
                   details={
                     <div className="flex flex-col mt-48">
-                      <Typography className="font-semibold">Core features, including:</Typography>
+                      <Typography className="font-semibold">
+                        {/* Core features, including: */}
+                        {"ویژگی های اصلی، از جمله:"}
+                      </Typography>
                       <div className="mt-16 space-y-8">
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
                           <Typography className="ml-2 leading-5">
-                            <b>10</b> projects
+                            ثبت <b>2</b> پروژه و آگهی
                           </Typography>
                         </div>
                         <div className="flex">
@@ -147,27 +161,34 @@ function ModernPricingPage() {
                             heroicons-solid:check
                           </FuseSvgIcon>
                           <Typography className="ml-2 leading-5">
-                            <b>5GB</b> storage
+                            دسترسی به 10% رزومه ها
                           </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">Analytics</Typography>
+                          <Typography className="ml-2 leading-5">
+                            ایمیل اعلان‌ها و به روزرسانی‌های مربوط به آگهی‌های
+                            ثبت شده
+                          </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">Free mobile app</Typography>
+                          <Typography className="ml-2 leading-5">
+                            پلتفرم مناسب تحلیل رزومه و مصاحبه
+                          </Typography>
                         </div>
-                        <div className="flex">
+                        {/* <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">Access to forums</Typography>
-                        </div>
+                          <Typography className="ml-2 leading-5">
+                            Access to forums
+                          </Typography>
+                        </div> */}
                       </div>
                     </div>
                   }
@@ -176,21 +197,23 @@ function ModernPricingPage() {
               <motion.div variants={item}>
                 <ModernPricingCard
                   period={period}
-                  title="Premium"
-                  subtitle="Perfect for growing teams wanting to be in more control"
-                  yearlyPrice="$12.00"
-                  monthlyPrice="$15.00"
-                  buttonTitle="Start a free 14-day trial"
+                  title="حرفه‌ای"
+                  subtitle="مناسب برای پروژه های خاص شما"
+                  yearlyPrice="150"
+                  monthlyPrice="200"
+                  buttonTitle="شروع کنید"
                   details={
                     <div className="flex flex-col mt-48">
-                      <Typography className="font-semibold">Personal features, plus:</Typography>
+                      <Typography className="font-semibold">
+                        همه ویژگی‌های پلن شخصی به همراه:
+                      </Typography>
                       <div className="mt-16 space-y-8">
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
                           <Typography className="ml-2 leading-5">
-                            <b>Unlimited</b> projects
+                            امکان ثبت <b>10</b> پروژه یا آگهی
                           </Typography>
                         </div>
                         <div className="flex">
@@ -198,27 +221,33 @@ function ModernPricingPage() {
                             heroicons-solid:check
                           </FuseSvgIcon>
                           <Typography className="ml-2 leading-5">
-                            <b>Unlimited</b> storage
+                            دسترسی به <b>60%</b> رزومه کاربران
                           </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">Custom domains</Typography>
+                          <Typography className="ml-2 leading-5">
+                            امکان ارزیابی کارجویان به وسیله تست ها
+                          </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">Bulk editing</Typography>
+                          <Typography className="ml-2 leading-5">
+                            پشتیبانی 5 / 12
+                          </Typography>
                         </div>
-                        <div className="flex">
+                        {/* <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">12 / 5 support</Typography>
-                        </div>
+                          <Typography className="ml-2 leading-5">
+                            12 / 5 support
+                          </Typography>
+                        </div> */}
                       </div>
                     </div>
                   }
@@ -228,21 +257,23 @@ function ModernPricingPage() {
               <motion.div variants={item}>
                 <ModernPricingCard
                   period={period}
-                  title="Enterprise"
-                  subtitle="Perfect for companies wanting advanced tools and support"
-                  yearlyPrice="$49.00"
-                  monthlyPrice="$69.00"
-                  buttonTitle="Start a free 7-day trial"
+                  title="پیشرو"
+                  subtitle="مناسب برای استخدام و همکاری در شرکت شما"
+                  yearlyPrice="850"
+                  monthlyPrice="990"
+                  buttonTitle="پیشرفت کنید"
                   details={
                     <div className="flex flex-col mt-48">
-                      <Typography className="font-semibold">Premium features, plus:</Typography>
+                      <Typography className="font-semibold">
+                        همه ویژگی های پلن حرفه‌ای به همراه:
+                      </Typography>
                       <div className="mt-16 space-y-8">
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
                           <Typography className="ml-2 leading-5">
-                            <b>Dedicated</b> hardware
+                            ثبت بیش از <b>10</b> پروژه یا آگهی
                           </Typography>
                         </div>
                         <div className="flex">
@@ -250,26 +281,33 @@ function ModernPricingPage() {
                             heroicons-solid:check
                           </FuseSvgIcon>
                           <Typography className="ml-2 leading-5">
-                            <b>%99.9</b> uptime
+                            امکان دسترسی به <b>100%</b> رزومه کاربران
                           </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">Advanced analytics</Typography>
+                          <Typography className="ml-2 leading-5">
+                            قابلیت درج آگهی در بخش ویژه اخبار سایت
+                          </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">3rd party integrations</Typography>
+                          <Typography className="ml-2 leading-5">
+                            امکان ایجاد و مدیریت یک کارتابل استخدام برای سازمان
+                            ها
+                          </Typography>
                         </div>
                         <div className="flex">
                           <FuseSvgIcon className="text-green-600" size={20}>
                             heroicons-solid:check
                           </FuseSvgIcon>
-                          <Typography className="ml-2 leading-5">24 / 7 support</Typography>
+                          <Typography className="ml-2 leading-5">
+                            پشتیبانی 24 / 7
+                          </Typography>
                         </div>
                       </div>
                     </div>
@@ -287,9 +325,12 @@ function ModernPricingPage() {
             <Typography className="text-4xl font-extrabold tracking-tight leading-tight">
               Everything you need to build efficiently
             </Typography>
-            <Typography className="max-w-xl mt-2 text-xl" color="text.secondary">
-              Start building your app using our tools, be efficient, spend less time with details
-              more time with your business
+            <Typography
+              className="max-w-xl mt-2 text-xl"
+              color="text.secondary"
+            >
+              Start building your app using our tools, be efficient, spend less
+              time with details more time with your business
             </Typography>
           </div>
           <div className="grid grid-cols-1 gap-x-24 gap-y-48 sm:grid-cols-2 lg:grid-cols-3 lg:gap-64 w-full mt-48 sm:mt-64">
@@ -332,7 +373,7 @@ function ModernPricingPage() {
         </div>
       </Paper>
       <Box
-        sx={{ backgroundColor: 'primary.main', color: 'primary.contrastText' }}
+        sx={{ backgroundColor: "primary.main", color: "primary.contrastText" }}
         className="px-24 py-40 sm:py-48 sm:px-64"
       >
         <div className="flex flex-col items-center w-full max-w-7xl mx-auto text-center">
@@ -362,8 +403,12 @@ function ModernPricingPage() {
             <Typography className="text-4xl font-extrabold tracking-tight leading-tight">
               Frequently asked questions
             </Typography>
-            <Typography className="max-w-xl mt-8 text-xl" color="text.secondary">
-              Here are the most frequently asked questions you may check before getting started
+            <Typography
+              className="max-w-xl mt-8 text-xl"
+              color="text.secondary"
+            >
+              Here are the most frequently asked questions you may check before
+              getting started
             </Typography>
           </div>
           <div className="grid grid-cols-1 gap-x-24 gap-y-48 sm:grid-cols-2 lg:gap-x-64 w-full mt-48 sm:mt-64">
@@ -372,9 +417,9 @@ function ModernPricingPage() {
                 What is the duration of the free trial?
               </Typography>
               <Typography className="mt-8 leading-6" color="text.secondary">
-                Our app is free to try for 14 days, if you want more, you can provide payment
-                details which will extend your trial to 30 days providing you an extra 16 more days
-                to try our app.
+                Our app is free to try for 14 days, if you want more, you can
+                provide payment details which will extend your trial to 30 days
+                providing you an extra 16 more days to try our app.
               </Typography>
             </div>
             <div>
@@ -382,22 +427,25 @@ function ModernPricingPage() {
                 Are there discounts for non-profits or educational use?
               </Typography>
               <Typography className="mt-2 leading-6" color="text.secondary">
-                Yes, our Personal and Premium packages are free for non-profits and educational use.
-                E-mail your details to us after starting your Free Trial and we will upgrade your
-                account if you qualify.
+                Yes, our Personal and Premium packages are free for non-profits
+                and educational use. E-mail your details to us after starting
+                your Free Trial and we will upgrade your account if you qualify.
               </Typography>
             </div>
             <div>
-              <Typography className="text-xl font-semibold">What is the storage is for?</Typography>
-              <Typography className="mt-8 leading-6" color="text.secondary">
-                Since we provide an extremely detailed reporting and analytics tool, they require
-                quite a bit storage space. For average use, you don’t have to worry about running
-                out of space since the Personal package limits the projects you can have.
+              <Typography className="text-xl font-semibold">
+                What is the storage is for?
               </Typography>
               <Typography className="mt-8 leading-6" color="text.secondary">
-                For some reason if you run out of space, contact us and we will see what can be done
-                about it and make sure you are not generating unnecessary reports and/or analytics
-                data.
+                Since we provide an extremely detailed reporting and analytics
+                tool, they require quite a bit storage space. For average use,
+                you don’t have to worry about running out of space since the
+                Personal package limits the projects you can have.
+              </Typography>
+              <Typography className="mt-8 leading-6" color="text.secondary">
+                For some reason if you run out of space, contact us and we will
+                see what can be done about it and make sure you are not
+                generating unnecessary reports and/or analytics data.
               </Typography>
             </div>
             <div>
@@ -405,14 +453,16 @@ function ModernPricingPage() {
                 What happens if I’m not satisfied?
               </Typography>
               <Typography className="mt-8 leading-6" color="text.secondary">
-                If you are still in your free trial period, you can cancel your account at anytime
-                with a single click of a button. If you already paid for your first month, we also
-                offer 30-day money-back guarantee with no questions asked.
+                If you are still in your free trial period, you can cancel your
+                account at anytime with a single click of a button. If you
+                already paid for your first month, we also offer 30-day
+                money-back guarantee with no questions asked.
               </Typography>
               <Typography className="mt-8 leading-6" color="text.secondary">
-                After first month, you can still cancel your account at any time but we will
-                calculate the amount that corresponds to days you have been using our app for that
-                month and refund only the remaining amount.
+                After first month, you can still cancel your account at any time
+                but we will calculate the amount that corresponds to days you
+                have been using our app for that month and refund only the
+                remaining amount.
               </Typography>
             </div>
           </div>
