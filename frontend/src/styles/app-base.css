@@ -18,11 +18,6 @@
     outline: none !important;
 }
 
-.Toastify__toast-body {
-    font-family: iranyekan, 'Inter var', Roboto, Helvetica Neue, Arial, sans-serif;
-    font-size: 15px;
-}
-
 html {
     font-size: 62.5%;
     font-family: iranyekan, 'Inter var', Roboto, Helvetica Neue, Arial, sans-serif;
@@ -96,7 +91,7 @@ a[role=button] {
 }
 
 .MuiModal-root {
-    /*z-index: 9999;*/
+    z-index: 9999;
 }
 
 /* Medium Devices, Desktops Only */
@@ -154,4 +149,9 @@ input:-webkit-autofill:active {
 /*fullcalendar Fix*/
 .fc-scrollgrid-section-liquid {
     height: 1px !important;
+}
+
+.Toastify__toast-body {
+    font-family: iranyekan, 'Inter var', Roboto, Helvetica Neue, Arial, sans-serif;
+    font-size: 1.4rem;
 }
