@@ -55,7 +55,7 @@ function ChangePasswordApp() {
         validation: yup
           .string()
           .required(FIELD_REQUIRED)
-          .min(8, MIN_LENGTH_PASSWORD)
+          .min(6, MIN_LENGTH_PASSWORD)
           .matches(
             /(?=.*[a-z])(?=.*[A-Z])\w+/,
             "رمز عبور باید حداقل یک کاراکتر بزرگ و کوچک داشته باشد",
