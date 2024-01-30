@@ -32,7 +32,7 @@ import Typography from "@mui/material/Typography";
 import WrapperDrawer from "../../../../../reusable/dialogCmponents/myDrawer";
 import DeleteDialog from "../../../../../reusable/dialogCmponents/deleteDialog";
 import EnhancedTable from "../../../../../reusable/tableComponent";
-import {selectUser} from "../../../../auth/user/store/userSlice";
+import { selectUser } from "../../../../auth/user/store/userSlice";
 
 const ExerciseContent = () => {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -80,6 +80,7 @@ const ExerciseContent = () => {
                     setOpen(true);
                     setHandleDelete(() => async () => {
                       setOpen(false);
+                      console.log(row.original);
                       await Promise.all([
                         // @ts-ignore
                         dispatch(removeAdvertisement(row.original.id)),
