@@ -1,8 +1,18 @@
-FROM node:20.9.0-alpine3.17
+FROM node:20.9.0-alpine
 
 WORKDIR /app/frontend
-COPY package*.json ./
-RUN npm install --force
-EXPOSE 3000
 
-CMD ["npm", "start"]
+COPY . .
+
+RUN npm i -g typescript
+RUN npm i -g http-server
+RUN npm i
+
+
+RUN npm run build
+
+EXPOSE 3005
+
+#CMD ["npm", "run", "preview"]
+CMD ["http-server", "build", "-p", "3005"]
+
