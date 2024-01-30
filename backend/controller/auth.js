@@ -60,7 +60,15 @@ router.post("/signUp", async (req, res) => {
     const user = await prisma.user.create({
       data: { ...body, password: passwordHash },
     });
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      process.env.JWT_PRIVATE_KEY,
+    );
+
     res.status(201).send({
+      data: _.omit(user, ["resume", "createdAt", "updatedAt", "password"]),
+      token,
       message: ["کاربر با موفقیت ثبت شد"],
     });
   } catch (e) {
