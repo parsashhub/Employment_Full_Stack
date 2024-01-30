@@ -129,7 +129,7 @@ router.post("/send", authMiddleware, async (req, res) => {
   }
 });
 
-//@description     send resume
+//@description     change resume state
 //@route           POST /api/users/sendResume
 //@access          protected
 router.put(
@@ -140,7 +140,7 @@ router.put(
 
     if (!body.state)
       return res.json({
-        message: ["no body provided with the key advertisementId"],
+        message: ["no body provided with the key state"],
       });
 
     try {
@@ -158,7 +158,7 @@ router.put(
 );
 
 //@description     get applied list resume
-//@route           GET /api/users/appliedJob
+//@route           GET /api/resumes/appliedJob
 //@access          protected
 router.get("/appliedJob", authMiddleware, async (req, res) => {
   const { user } = req;
