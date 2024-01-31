@@ -10,6 +10,7 @@ import AppsConfigs from "../main/apps/appsConfigs";
 import forgetPasswordConfig from "../main/forgetPassword/forgetPasswordConfig";
 import otpSigninConfig from "../main/signinWithOtp/otpSigninConfig";
 import Error404Config from "../main/404/Error404Config";
+import advertisementsPublicConfig from "../main/apps/advetiesementsListPublic/advertisementsPublicAppConfig";
 
 const routeConfigs: FuseRouteConfigsType = [
   SignOutConfig,
@@ -18,6 +19,7 @@ const routeConfigs: FuseRouteConfigsType = [
   forgetPasswordConfig,
   otpSigninConfig,
   Error404Config,
+  advertisementsPublicConfig,
   ...AppsConfigs,
 ];
 
@@ -32,7 +34,7 @@ const routes: FuseRoutesType = [
   {
     path: "/",
     element: <Navigate to="/apps/advertisements" />,
-    auth: settingsConfig.defaultAuth,
+    // auth: settingsConfig.defaultAuth,
   },
   {
     path: "loading",

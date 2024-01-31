@@ -18,18 +18,18 @@ import Card from "@mui/material/Card";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { apiCaller } from "../../../../../reusable/axios";
 import axios from "axios";
-import FormikHook, {
-  createFormikObjects,
-} from "../../../../../reusable/Form/FormikHook";
 import _ from "lodash";
 import {
   useGetJobCategoriesQuery,
   useGetJobContractsQuery,
 } from "app/store/utils";
 import { toast } from "react-toastify";
-import { NO_DATA_FOUND } from "../../../../../reusable/messages";
+import FormikHook, {
+  createFormikObjects,
+} from "../../../../reusable/Form/FormikHook";
+import { apiCaller } from "../../../../reusable/axios";
+import { NO_DATA_FOUND } from "../../../../reusable/messages";
 
 const sortOptions = [
   { sort: "title_1", label: "صعودی عنوان آگهی" },
@@ -257,7 +257,7 @@ const Content = ({ data, setList }) => {
                     }
                   >
                     {_.isEmpty(user)
-                      ? "وارد شوید"
+                      ? "برای دیدن جزئیات وارد شوید"
                       : user?.role === "JOBSEEKER"
                         ? "ارسال رزومه"
                         : "مشاهده جزئیات"}

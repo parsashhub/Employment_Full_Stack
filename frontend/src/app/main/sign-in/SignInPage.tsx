@@ -98,7 +98,7 @@ function SignInPage() {
             </Link>
           </div>
           <div className="flex items-baseline mt-12 font-medium">
-            <Link className="mx-4" to="/apps/advertisementList">
+            <Link className="mx-4" to="/advertisements">
               مشاهده لیست آگهی ها
             </Link>
           </div>

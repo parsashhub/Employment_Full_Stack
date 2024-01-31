@@ -27,7 +27,7 @@ export const setUser = createAsyncThunk("user/setUser", async (user: any) => {
 
 export const resetUser = createAsyncThunk("user/resetUser", async () => {
   history.push({
-    pathname: "/",
+    pathname: "/sign-in",
   });
   return true;
 });

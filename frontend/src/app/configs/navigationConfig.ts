@@ -138,15 +138,6 @@ const navigationConfig: FuseNavItemType[] = [
         auth: authRoles.all,
       },
       {
-        id: "apps.advertisements",
-        title: "advertisementList",
-        translate: "advertisementList",
-        type: "item",
-        icon: "material-outline:list",
-        url: "/apps/advertisements",
-        auth: authRoles.onlyGuest,
-      },
-      {
         id: "apps.signIn",
         title: "signIn",
         translate: "signIn",
